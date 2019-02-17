@@ -1,0 +1,411 @@
+its amazing how I can repeatedly make the same stupid mistake over and over and not realize it anywho I think im done for the aday simply because, really no reason maybe fear how knows anyways what id like to do right now would be.... I DONT KNOW oh yeah so what the thing that i did so far was i figured out what was going wrong and set up the build so that it does and finds the first box and paints it i think honestly itll probably work.. ish there was a slight bit of oddness with fmix i think its missing boxes there were only three in there and that made no sense
+
+so i gotta figure that bit out before moving forward otherwise im relatively certain that if i can get that working i should be in the clear i o think that adjust box and create fit boxes function boxes should work, but it hasnt handled underboxes yet, so i wouldnt be totally surprised if it fails but good luck future jon I hope you worked harder than i did and got those rides instead of putting it off and programming.. I really just wanna go to bed... hmm, 
+
+
+ok so i have to see whats being cut off and see what goes down 
+im particualarly interested in the line number 1353
+
+so now the thing actually starts the thing at the end, just so we dont run over data, if it repeats like.. who cares right, i think im gonna put it all in one pointer anyway, dont know if thatd even do anything since its set up like that anyway... whatever
+
+i could literally just put them in a different variable but i have not because i am dumb.. and i dunno i dont think its gonna do much anyway 
+
+it has to be greater than the xl and 
+
+i dunno whats going on but it smells wrong i dunno it just feels like im doing something dumb here
+
+oh this was the xl stuff and i was concerned that it tmay be the  t1 and t2 may be just the things beteeen 0 1 which would make it dumb 
+
+wel, what the fuck well there is something wrong with bcnt it doesnt get to the end as i expected it would which is weird to say the least 
+
+ok what i would like done today 
+
+
+well its been the same for the last week i really wanna get the thing fully filling 
+
+so figuring out the problem with the boxes and then trying the triangle thing, but not really because im just gonna make the boxes fixed sized and smaller, and its gonna slie the end and begin point
+
+im looking, oh i gotta go to application place and just see if the box fill is working 
+
+
+im gonna try to work maybe till `12:15 this one is a bit of a tough one.. well not really but im struggling so im gonna try and figure it out then ome back and do it
+
+ok almost done just gimmie like ten more minutes, I wanna see what's going on with the junk
+
+ok just gimmie till one i am having trouble going in and out
+
+ok i wanna do the damn thing i just dont know what to do and im a bit frightened of the code since ive done it so many damn times i think im gonna go for analysis i got 20 minutes lets see how it goes, maybe some debug info would be better yeah.. so i got to about 840 lets 
+
+
+break it up i think im gonna try to get the debugger going lets just see if we see anything weird ok i wanna try getting it on the 3 loop in application i think what it does is find a left box and then susquently try and fill that box
+i think its yl is um wow um jeethe minute i give in and do more than im supposed i think ill be in real trouble, here is what may be happening 
+if c2 yl < box yl, its weird but i feel so dumb for not realizing it before all the boxes previous to it count ... no they dont its why i put the yh has to be greater than... which honestly doesnt scale to not changing but if it didnt change id have no reaso to paint it anyway
+
+ok so first this isnt going to solve the problem but the left most one you can dont change the c2<= box because that wont scale well if i tell it has to be equal to i may get away with making a new boxref there but why bother, am i right... moving on 
+
+so my boxes are flipped, that's stupid
+
+
+UGGH it's seriously the hardest part is stopping, I swear all i wanna do is make deals to let me work, i even slipped and let myself debug outside of sanctioned time, I feel a little bad about it but there you are,
+
+anyway I think.. or at least hop itll help me with my time management and planning, but if not, i have to earn the time to work on it, so yeah, its 2 and a half weeks nothing If you go over.. AT ALL. i wanna put that down so there's no discrepency anyway the damn thing is flipped what you're going to want to do is change line 1341 and 1367 honestly that could have been a loop or something but whatevs the line is supposed to be
+
+brf.yl = p1.y; brf.yh = p2.y;
+brf2.yl = p1.y; brf2.yh = p2.y;
+
+and also i changed line line 1470 make sure to change that... mmmk
+
+
+that one says if the box->xh < colVolumes[i].xl make it 
+box->xh = colVolumes[i].xl;
+
+all i think we have to look for is the highest yl in the bunch 
+
+so we go something like i dont wanna type it exactly here cuz i feel like thatd be cheating so im gonna say what i should do instead im just gonna equal it to some float like  h set that equal to colVolumes[0].yh and then im gonna go and just that and were gonna look for the lowest yh in there
+
+so if colVolumes y h is less than  box
+
+
+wow I learned about some algorithms are really old, hmm i dunno you have to work with an algorith that guy from computerphile said that there 
+
+
+I feel like things are starting to open up hmm... ok we sa done It seems interesting im really gonna try to delve into it, I may even invest one of the five to doing the algorithm, who knows, ok lemme thing
+
+
+
+mmk so this is how things gogo gadget the first part anyway what I can or should do is get the intersection and associated bezier, I think I may be thinking about optimizations to early which makes it hard for me to think when is this going to hit its either final T or final bezier point I think tit should be from its first i'th to the second i'th on the bezier, and that's stored in pairs that we will call the fill buffer 
+
+okay im gonna try and find out how the data is arranged... pooh its arranged using a completely unrelated t value ok let me get till 15 for the first bit to figure this out, Im gonna work on the outline before i do it 
+
+so again still not to sure because i have to know the b_i, yknow maybe i do, if split bezAt t hands me where the bezpoint is ok so we can get the data from the inx tells you where the bezier happens and with what bezier
+
+actually i dont actually think i need to know about the associated bezier i just need to know which bez refs are getting added into the fill buffer
+ok 35 now
+
+ok now we have till the the last to 40
+
+ok were done, dont go over too much but i think im just gonna figure out how this is gonna manage itself 
+ 
+and i can call split bezier whenever i feel the need, now where it gets tricky is finding out if I have done inx, are not bezier points in other words dont split it you just have a reference to it thats it
+
+
+ok so this is what were gonna do for a test case we're gonna gather all the inx's and just have a system that just tells me where they are no splitting
+
+until we get to say five thats when we hand it all the inx's this is a little future proofing but were gonna make sure the inx's are just hanging out in a seperate array someplace and we're gonna be like..
+
+35 yeah the fill would do this all it would both get the paired intersect 
+and push that onto the fill que
+we're gonna call a function called testCode::imaginary fill, that funciton is gonna go through all our inx's that are in consideration, and go from the lowest b_i in the inx i actually dont have to split it, I just have to start at the t it gives me go through the bezier function, loop through all inbetween b_i till i get to its next b_i of inxes inxes until further notice will come in pairs for the x's and the y's, I can do some pair sorting on these as well nothing fancy just a straight bubble sort, and we'll put a note to optimize but i doubt this wont go to simd then see, its gonna be interesting to see how badly this performs with like no optimizations 
+
+in the future i see this function getting split up and sold for goods, yknow flood fill may be very limited but pretty much its gonna split the thing into lines 
+
+for the flood fill intersetion its first we do some bounds checking, ok first off we dont need to do that, when we draw the damn thing we will literally know that, so its bounds should be determined on drawing, a sepereate formula to find every sub and then get the total maxima, is redundant and dumb
+
+oh the fill is based on full bezier's... lets change that
+
+the filling will literally hand me the fill buffer, which means the filling is gonna be the one dealing with inx's and all that... not the line fill
+
+... ok 
+
+
+________ WE'RE HERE STARTING
+
+it really helps if you dont think ahbout optimization 
+
+// dont test anything today just try to get though as much work as you can while isolating well test that it actually compiles 
+
+which means first off look at the shit code you wrote before make sure it compiles 
+
+this should be the easiest thing 
+
+create a bounds for beziers
+
+so on mouse up after creating one check the bounds
+
+if they collide code from 1308 application.h and check each possible one, dumbest way possible, put to optimize on there or whateever
+
+if they dont collide just forget about the boneheads/reuse them.. and do it again next time, again put a to optimize sticker here
+
+
+
+we start with the intersection first make the intersection test return a pointer if it intersects this way i can just return a null if there is no intercept, its a bit of future proofing but its fine
+
+
+just do a quick sort before going in first the pairs, then together  the together one you just do ever other then qsort, dont think do 
+
+at around 1503 your gonna wanna go through and put the sorted points into bezrefs 
+
+in bezierhandler testcode::adjustbox
+to that point  just popout the left most so we have an up to pop, as soon as we finished and our low is equalto upforpop.yh pop it out, then it should jus slide in and work this is not test code, beause its included in the thing it should just work, whether it  works, we wont know until we play with it, but its not crazy important, and now we have to always look for the highest, but dont worry about that now, just do the other part, when it comes time to test it just do that here
+
+
+we will then make a fill tool we will say if you click on the top left corner you will not draw it will instead switch to a different fill mode and back again really simple you just ask wher if click down and position blah blah blah, but first your gonna wanna test out if down works, again not test code, its so easy but if i screw something up itll be a nightmare to find down the rode 
+
+
+as soon as i press the fill button it goes and checks the bounds, of each bezier check to see if that passes then if that passes then it checks the bezier split box thing i deleted, test and run that, if that works then  we start from the lowest b_i and the lowest t, we start creeping up from the first point to the second bezpoint and put that in an array, but sets us up when we change we can do a mix but for now its fine just put all the points in test against the boxes, just do it between the pairs, dont go nuts,check to here, dont worry about the rest we literally just wanted to check if it was in that pair, then we right hand wind round the damn thing were just gonna do it again, its dumb but its much cleaner and less code to clean up later, stop trying to be clever, so we check against the fine grain,then we know our pair and can do right wise unwind on the thing, thats a bit difficult to compartmentalize all at the same time so just go find the next one in the bezier once you've matched it, work your ways to solutions, its much faster , if its not inbetween two it may have some errors later, as long as thats not to far from now i will be fine 
+
+ 
+
+NOT TEST CODE, the none smoothing part at least
+were gonna do zero smoothing and just do line to line, see if anything really weird goes down, and just kinda paste in the perpetual smoothing code write in whatever like quick time it shouldnt take long not active code
+but the multiple lines is so we gotta take away all the predicting crap, just delete it, its gonna be more looking understanding playing see if it still works, go quick dont spend too much time
+
+Fix mouse, thang watch casey fix mouse position copy time it
+
+we're gonna skip kerning and kutting even moving
+
+well we can do moving if we have time
+
+but kerning isnt too useful and kutting i can do real simple but not now there may be more to it than i think i just goes to the intersection and deletes the preceding either intersection/beginnin/end
+
+next is frames  has a frames beginning and a frames end frame we'll do a simple just redraw the lines, the lines are being redrawn 60 fps anyway so whats the haps and we'll do lots of "little" permanent frame painting things, later we can just replace them with images but for now simple arrays
+
+
+doing all this today even in a rough would be extroadinary now lets try to make sense of all this 
+
+
+
+I just gotta do frames then 
+
+smooth
+
+
+thats a huge most of it done done
+
+we need to then think about cutting, cutting is done by 
+
+
+ok that wasnt at all painful which was nice not the best solution but who cares we need to now look at smoothing then testing and making sure everything at least kinda works
+
+TODO list:: theres one at GLOBAL RESOURCES 213 umm i wanted to change the the bezREf get rid of the control points i think thats all i need to get rid of but who knows it may be a bad way to go 
+
+2) investigate 287 TODO
+
+3) then the coude gra one the change the verts thingy one, were gonna make three seperate versions and just go buck wild we'll just call em one two and three and just keep practicing fixing em, remember its practice 
+
+
+
+ok so there seems like a repeating narrative for great learners in their planning and thats actually to start at the end game for me i want to the things i think im weakest at right now besides the things i have an active plan to improve on are story telling music and programming i dont have a fixed path on those so lets just get some things out of the way and try and figure out how and where i want my "game" to be, first my typing is um good regularly but i want to be faster than casey at least the faster i can type at programming the more i can get done and the less i have to actively try to think about so i think ill get some things in excercises like variables and what not in a real simple practice typing kinda way
+\
+
+hmm i think these three would do me a personal much better speed ups
+
+SO speed typing for programming
+also really fast idea to implementaition,
+also quicker iteration, and improvement model
+
+coding review
+
+music im just kinda lost i want melody with structure but feeling maybe i should seperate them into basic parts and then try to evoke as much feeling as i can with rhythm, breaking down songs and trying to push them with just one notee
+
+
+hmm stories real simple stories that should be like a five minute thing with the most boring subject and we try to break it down 
+
+i should practice cruelty in my stories, i dont want to pussy away from the best story.
+
+few things i dont get, and im more scared thatd work than not work... umm who cares right, heres what i think neds to be done
+
+
+i dont understand why i halfed the length between the two points, it dont make no sense
+
+it seems like a slower progression out of the rhythim works better maybe?
+
+
+so thinking about confidence, I think to my ness is there is a great deal of it, but there is also its shallow, in other it's one or two hits and I dont know how to respond, I need a deeper level of it so I can still function, regardless, It's like hot girl confidence, if someone tells her she's not pretty, that's all she's got, and she is easily manipulated
+
+I think there is a relentlessness you need to embody, with powerful people like rose and patrice, there was this constant relentless vigilance, that noone was immune to, but it wasnt always on with patrice, if I can learn to control that thatd be great, my question is, why can I not come up and answer stuff in person, but online, I'm untouchable. I need to be able to transfer that ability up, I think that may be the first of my things I'd like to work on, also though I dont want to lose kindness. and fairness. If I can somehow do it my way  I think I can really become a force, there is just so much good to work with, it's rough around the edges but I think with a hell of a lot of refining I can get there, also of course there is memory when people tell me things, but strangely that seems to be getting better, I think instead of memory, its a pots and pans thing, so it never actually goes in.. to begin with... hmm.
+
+
+rhythim doesnt seem to work speeding up directly i wonder how I can get that to work
+
+
+okay i just have to figure out how to do things now I need to place a point based on an angle i think but i get this wrong all the time its mid.x + *cos(feta) mid.y + width* sin(feta) and thats al she wrote laddie
+
+
+
+ok im thinking what i want to do and if i want to set up a binge session just to go through alot of stuff real quick but im not sure if it will be beneficial or not who knows it may be but it could end up being just a waste of time sooo.... hmm... 
+
+
+its really amazing what watching caseys streams did to me, im like this weird spunge that when i see something is possible i improve, i wonder why that is and why i couldnt improve before seeing some of this stuff was possible, that or maybe a lot of the constant typing and what not 
+
+
+anywho i just wasted
+
+
+i think get things planned out it a big form narrative may be best i think what i want really first up to bat
+
+is just being able to test the damn thing in a manual select this one and then get it to animate to the next one, and then it do its bezier cutting weirdness,
+
+few things i should be passing the values of the edited width through the thing Im thinking of adding an edited points on there that mirrros the renderer of the system. it should 
+
+so id calculate which iter it would cross and then just pass the width? if i can get away with it ehh j
+
+
+ok i think im at the point where im gonna checkpoint thi   	
+
+
+
+I want to understand more of what im doing i feel i need more depth of it and also breadth i want just more 
+
+so Im looking through fabians blog to understand a little bit more
+
+the goal is to try and pick up something i dont know about caches, I guess i can start with a little bit i do know
+
+cache is a really small bits of memory that are on cpu they are really quick since they dont have to go all the way back to main memory which takes ages, there are usually 3 levels of cache, l1 l2 l3 cache thats mostly what i got whats more and i knew that the caches have increasing levels of memory
+
+
+so far basically saying the same thing nothing too new cpu totalks l1 talks to l2 to memory etc 
+
+
+Im gonna try a scan and see if I can pick something up, and then depth, breadth and depth search 
+
+ok something new he says cache is organized into lines, what the fuck that means i have no idea 
+
+ok its not really new, but the way he did say it is weird, the lines just refer to the amount of and how the memory is arranged and i think how much memory is in there,
+
+he said the its 32 im guessing l1 64 128 l1 l2 l3 probs... ok so 
+
+ok heres a though i wonder how the cache lines are, or are they represented in the virtual paging
+
+ok oh jeez i was right wrong in the cache line, basically it is its like if the cpu tries to load an instruction from the it looks in the l1 if its not there even if its like a bool or whatever, it flushes the cache "line" all 32 bytes.. thats insane, thats like 4 pointers of data or 8 floats
+
+its weird it's design assumption which is the localized access, changes entirely the way we have to design our systems
+ 
+I think im gonna need a plan of when i need to go out, because ive just realized that i am done with most of the hard stuff and we have to get this ready for presentation
+
+were gonna try to go with pure undo and line selection and deletion, and not create an eraser just yet.. until needed, oh and pressure fix that garbage
+
+line selection were gonna be dumb and just set it up for the eraser... yeah
+
+i like this put the new test code right underneath the old code that i want, it saves me a lot of time rewriting the shit
+
+
+ok real quick that i need to do for it to be presentation ready, lets tiny up the timeline for a quick demo
+
+it may need some optimization
+
+
+
+
+
+
+
+I think i may if im lucky be able to knock this shit out
+
+
+
+oh clicking and selection 
+
+umm i think i can get away with something
+ 
+first i need to have a selected array 
+
+	then selection mode, so when i click its going to we are just going to do a box collision with my mouse cursor in the middle
+
+	then we will check intersection between points 
+
+	
+
+
+filling a better test for shapes
+
+
+well its not too hard its the closest line in every direction
+
+so were gonna look above it so we can take that position picker and 
+
+for the sake of sanity and my understanding we make all the intersection points go.. hmm im confused.. first i need to know the shape before i can determine that.. hmm an inside outside rule seems honestly seems the best.. which would imply that i made shapes all the time in the background
+
+
+ok im still again a tad bit not sure what im going to do im thinking maybe a system that looks for all the shapes i dunno that seems like its adding complexity on top of a system that does tweening that may bite me in the ass
+
+whats the dumbest thing i can do that will fulfill all the requirements.. hmm regardless it needs to look through lines and see if it makes a shape.. only because its pointless to look through all the points for a certain individual, and any shape that im inside i check if im actually inside, with an even odd check.. shit.. but first we can if its less than the thing and then greater
+
+so what i would expect to be able to do at least in rough today that's tested is create a system that creates shapes i should have a shape thingy.. anyway shapes are cheap they are just ints or pointers to lines, I may just use pointers, because an int would more expensive, since i need two ints, one for the frames
+
+
+ok im thinking im just gonna cheat because as i have it now I can just use bezier points and pretend they are lines... so I can simply be like are there any third consequitive bezier points that lie lower x and higher x
+
+it still makes more sense to check for shapes, and the shapes checker.. just takes just the bezierCurve.. then searches its closest neighbors. one direction each time to see if it get back home. I should have a similar algorithm here, 
+
+
+
+
+
+right now Im just checking out what.. oh fmixer takes a collection of edges.. visave the boxes that make up the thing.. also i have stuff in my clipboard paste that into the new function i wrote
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ok so maybe in the "real code i could just do it willy nillly and give shape" a width and height yknow that sounds easier... easiness here i come
+
+I could first check above
+
+tweeening, just select from the 
+
+
+I need it to actually live cut it now 
+
+use the ix of the points to cut it, then get 
+
+and have a cut button 
+
+pressure 
+
+
+
+UI
+
+getting the images in, real basic shit
+
+
+undo
+
+that is enough to demo the gabage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Id like to get down to something like five minutes if i could lets see
+
+
+ok im a little nervous but it seems that i have to access a 6 by 6 2d array should be pretty easy lets see whats up
+i kinda like this 
+
+Im confused at what the question wants it has to do with hour glasses, and it wants me to print out the largest possible hourglass format
+
+it was hard to understand what it wanted for a while figuring out the answer was pretty trivial but the set up was pretty annoying
+
+hmm its wrong somehow I dont know how though lemme run it through my head I guess

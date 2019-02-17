@@ -1,0 +1,91 @@
+start = clock();
+                end = clock();
+                double total_t = (double)(end - start)/CLOCKS_PER_SEC;
+                trace("\n\n\nExit program time = %f \n\n\n\n\n", total_t);
+
+
+umm so were gonna try to figure out what questions we have
+
+he's gonna talk about aglos and their applications that seems important i think i should definitely examine how they are usually applied rather than just the algos themselves
+
+apparently ther are questions that force you to the algos for yourself which sounds like fun and Im all for frankly 
+
+i dont agree with a common sometimes comment and um take away that they often have their own terminology, thats fucking school bullshit annoyance right there for one oh well 
+
+yeah so i was saying i didnt like that it uses its own terminology not particularly usefull the my comment or the actual use 
+
+it seems as though it may be best to go with an assignment first method of the thing and work backwards from there look at the practice problem see where i get stuck and see if i can eventually figure it out
+
+
+
+yeah so do the algos then see what i dont know and its like a scavenger hunt for the answer to the problems sounds fun five minute a day type thing
+
+
+
+UM OPTOS
+
+s
+
+
+so were gonna do a survey first see what i dont get and research.. mmk lets doo this
+
+you kknow it actually has goals before hand that are actually pretty good
+
+ok so i got the jist im gonna try to pass and get a 100 on the practice quizes and look up the answers throught the lectures right now what i dont know is 
+
+1) what is a equivelence relationship
+
+how do i determine they are connected?
+
+
+n members and log files  - they are sorted by timestamps 
+logfiles contain m timestamps at which when they became friends
+
+I dont know how do i get the data 
+
+does it say who they bacame friends with because thats all i care about
+because if so then i can ignore that and just find the degrees of seperation
+and i think i can do better than nlogn honestly if i memo Ize the result
+
+Friendship is an equivalence relation 
+
+how do we determine there is no connection between them 
+
+I dont know how to begin to even look 
+
+
+so i dont actually nknow what the answer of the question is but im assuming something like this important info
+
+
+harry  - sally, mike, carl, wakand 
+
+jimmy - sally, fred 
+
+carl - jimmy phillip
+
+i dont know if im supposed to generalize but if i was looking for i would 
+memoize the the results so I would go through and be like harry  has akey, sally,mike carl wakand  so 0 is sally so that  value[0] = link.harry 
+
+after looking over the data i think i know what im supposed to do it goes something like this we add put together everything that is connected so its more like social circles, I think but that seems nothing like this answer so i think im gonna need some further investigation to see yknow let me get the hint and I will better inclined to better answer the question
+
+
+ok last time i got the hint union find which besides being a useless answer was insulting
+
+
+I think It goes like what like this 
+
+I guess it wouldnt be bad to right out this problem 
+
+int arry1 = {1,2};
+int arry1 = {5,7};
+int arry1 = {3,4};
+int arry1 = {2,4};
+int arry1 = {7,8};
+
+and my output would be 1234 578 
+
+so I think i would tackle this problem by umm 
+
+
+
+umm i dunno lets 

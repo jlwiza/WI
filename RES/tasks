@@ -1,0 +1,120 @@
+TODO:::::: so i fucked with intersections after i found out how memcpy actually works and I have to see if that actually still works I have no idea so yeah fun times for all
+
+
+so ok just wanna make sure that this is the thing i wanna do lets do a stream of consciesness i need a new keyboard like yesterday this on e sucks anyway 
+
+where i am i wanna get all the steps down that i need to get the filling working and the testing that ill need to do it we'll spend an alotted amount of time to testing and configurattions meanwhile always writing notes and never going over on any one specific task so the fill becomes the testing ground to see how well this idea can work 
+
+
+I may wanna do a partial scanline fill partial box fill cuuuuz, figuring out what shape is which and where it goes is kinda annoying and I dunno if i wanna do it based on the intersection
+so instead of scanline i could do the main box fill then do exactoboxes after which to fill in the gaps... should work, its the same as scanline really except less guess work so its the sam except its different, ok but for the multi frame fill to work smoothly it needs to now what lines create it from the intersection
+
+i may wanna table this or just do both ... but this one is of secondary concern then i need scanline to work since the it uses the lines as he references... leads to another question how the fuck does it work, because it doesnt actually use the same intersection because i need i dunno but i do need to think about this now i think it needs to create its own bezier outline.. hmm no i dont think thats necessary i think it dlf;;jdlflj;aljsl;jfas.. just try it and see what happens i think trying o think about this before hand will just drive you mad, i think the intersection thing should work though because it acts as a side and even if you have one line taking two nonconsequitve parts it hurts my head.
+
+ok so were gonna do the scanline because i dunno just because i suppose and we'll work something else in the later laer
+
+the way it will work in this is scanline there are a few stopping points the one that im a little worried about is the right hand thing, hmm i think at this point instead of flipping the thing that arent facing the same way we will just figure out if its fill needs to be right hand or left, im trying to think if i know how to figure out if a point is left hand or right and I dont know but i think what it is is just the normal that kind of right hand.. i was thinking of it as not just a set of lines, if its just the right hand/ left hand i think ill just make sure it all goes in one direction regardless of how it was drawn which is just a flip of the points i can do that after and just make a note of that I may wanna set up yes, ill wanna split up and do all this set up on creation, just cuz filling is time consuming and the more i can split up when its done i think the better youll just be looking for if its positive or negative for the local thingy mbob. honestly if you figure out like it in general it usually paints a consistant picture if that makes sense so in otherwords if its costly oh its not its just the dot product but anyway finding its box ok so yeah when you draw it it splits and anmakes a bounding box for the left and the right... ok so thats figured out 
+
+just do the dot product of the closest line to find out where it goes... i dunno i dont know if thats true but what i do know is that im going to seperate them into arcs, of basically something like three lines, i need to make note of how many seperations i make but most likely three, ill probably make changeable the other one but this one i can do any time just make a note to change it, the cool thing about this too is i can test it pretty well, and i actually done need more than one line to do this which is cool ok im gonna work till 30 get a plan in place then what i need to do to do the first pass 
+
+i need i think to do is this when you create the split, do that again and keep the bounding boxes, Im not sure if i need the reference information like how the split works but put a note for clean up there in case i dont most likely not, but then what i need to im going to also go back for an instance were gonna do this sloppy and then clean it up later if we need it, right now the problem is beziers dont split equally nor do they have a distance, we need neither, but they help so we'll have the line segments on board and ready to work for me in truth we'll just set up a thing where it just keeps the points since we never need more than one reference of that, so when we make the points we are gonna get the first second and last to see what we need in terms of which points are left and right, so we basically make a loop after we have done drawn and seperate, and take the first and second point seond and third etc, and test what is the dot product of each of the four corners... 
+
+ok the splits should be at a fixed distance heres why because then i can do some of this work while its drawing, but its fine while im testing stuff
+
+for making the corner shits, what i gotta do is this i gotta first point is on one of the corners or the middle, we'll create the right hand of the thing first i dont think i actually need to ask it if its right hand though so i think its good if i dont itll make for faster drawing, well less to do in case i want to expand so anyway then i ask since the thing can either be going left to right or top to bottom we then say ok there buddy which way are you going, first pass we'll handle all left to rights then we'll handle tops to bottomss ssooooo ok for the left to right we 
+
+ask hey are you at the bottom left bottom right, and then just an else, it'll be like, yooo but i think i got this, so ill be like just handle each individual situation creating a curve i honestly think thats it, just fill in the box and that should do it lets go clockwise for no particular reason handling all the scenarios.. its really not all that hard.
+
+and ill go over all the steps later but lets figure out the scanline first and then we'll go from there I think its honestly pretty easy to do and debug so we'll do just that... oight. this is going to be needed to be remade so its distance based afterwards and itll split after every third one. on that run too, we gain a superpower, the bounding box formula we dont need it, since we'll be creating all the points, but we would need to know where the splits were when we change the damn thing around.. thats some heavy shit.. yeah we wouldnt need to use the bounding box splitting. since itd be split already... now the question is if i can use that superpower on intersecions, and i say probably not but on an optimizing pass if i need it, i can trim a lot of time off by remembering which parts where split, just around it, so when i move it around the split area  it doesnt have to split it eight thousand times.. ok i think thats that for now
+
+so next up is planning the scan line
+
+
+
+
+SCANLINE
+
+so what we wanna do now is that i want to be able to finish off the right hand or whatever hand of the box,/the internal side of it/ you should be taking into account the maximums when im doing the splits, 
+
+so in split bezier add a routine that asks if the any of the courners is max if it is use it.. thatll give me my bounding box.
+
+i have to do the same thing when drawing it, also remember none of this is exact since, drawing the lines is a rare instace and editing the thing is far more common, so dont go crazy after at the drawing process.
+
+.. ok after you got that 
+
+
+
+
+
+
+at this stage then you wanna do a quick pass on the working of the box test thing i did, should be pretty easy
+
+the next part is hard, not because the algorithm is hard, its hard because there will certain bits that need to be taken out of consideration, the reason that this is difficult, is because up until this point, I never had to keep the data for long and could replace these all with images, and update as necessary, and we can do the same here only thing is we would take the points on the box it doesnt have that are not to the left hand or whatever and delete the data in that part and paint inside that region. Its tricky but i can manage i think
+
+but ofcourse for now I should have all that data and im doing it a dummer way
+
+since intersections are so common having all the intersection data helps me out tremendously, and we can have like a guestimate thingy if we're editing it, since itd have to redraw it, and itd only have the end points in a worse case scenario
+
+after the intersections and just asking what triangles are necessary and whatever wizardry im going to need, we'll have to make a scanline to fill in the rest of the boxes
+
+
+which actually we can test but we cant immediately implement because it would really be a waste but then using that we can fill squares pretty 
+
+also even that guy was wrong on certain things, it does seem a good idea to not lock the refresh rate to the logic, so i can do things and then it can catch up to me afterwards
+
+
+I wanna see if i can pick jonathan gay,Robert Tatsumi and his teams brain on  what hurdles they faced developing the software, and how they figured out a l
+
+
+anyway so lets get the scanline thing ok so it works like this 
+
+overview i thought about it and you say ok whats the top boxes and then you go whats the top boxes and the one most to the left, then you say hey am i inside if i make box anywhere on this row, then you check the next row
+
+
+ok its a little confusing but yeah it favors height over left ness how that translate into ode is something i need to figure out though
+
+well it takes the heighest boxes, then it looks to the left most then you use the bounding box after you've found it and you say anything that starts at the top right of this ref box, then that same y and the x of the right side of the bounding box, and the x and y of bottom right of the ref box, then same y and x of the of bounding box again. were gonna see whats in here and thats everything in consideration, at which point were gonna kill some stuff out of consideration, first we want the closest/leftmost  top left corner t for one of these in the collision thats should be first it has to be to the right of the referene rect and less than or equal to the top side the reference rect if there is nothing inside that initial one no collisions then we are definitely not inside the shape so just move on I dunno if i need to keep checking if im inside the shape i dont think so, but if i do thats wheen the box fill will become hella useful, ha, i said hella, what a dooouuucchhhchhhe
+
+
+what do we do after we get the boxes inside our new clipped bounding box and were gonna check if any boxes are in here if not this becomes our new box if not we have to check for a few different sitchs 
+
+basically were gonna then see first see if there are any top right or top left corners inside the box there, if there are take the heighest thats our new low and with it our new bounding box,  now the only possible boxes are boxes that touch the right edge of our reference box and top corner is less or equal to the height of the collision volume the only thing we are unsure of is whether or not it touches the right side of this new collision box, so we ask, and there should only logically be one, check that here, if there is i have something i need to consider and it should stop right there, but hopefully not, so we want to check the right side of the box in there is equal to the right side of the colision volume or the left side of the left reference box/ same thing if its not just fill that square
+then do it again starting now with the low part of the box as the high of the new collision volume, if you dont find anything move on, taking those out of consideration... this should do something... what im not to entirely sure... but yeah
+
+
+
+
+do i handle top left corner inside the collison volume boxes?
+
+this is getting way too clever and its scaring me, I think i need a dumber solution lets try and keep this as stupid as possible then optimize it later 
+
+ok lemme think about what i need to do here.
+
+i dunno i think i just need some refurbishing cleaning up see what i need to do next 
+
+i havent gotten it so it works on a shape lets figure that bit out, this just determines which boxes are in consideration 
+so we say the boxes that are in consideration are the boxes that occur in the bezier between the intersection 1 2 3 4 1
+
+then later we'll figure out how we actually figure  that out in a more sensible fashion which for some reason cant figure out right now but i will get it hmm i could just say well the inersections are the shapes, without an intersection there is no shape because we can extend an artificial intersection so we just say that we look for the order doesnt matter what matters is that it can make a full loop so that the next intersection or something itll work on the first one, how im gonna click to fill it though, hmm.. i dunno might wanna figure that one out, get it figure like a shape, that something has... ahhh hillarious have you heard the one about the.. i dunno where im going with this im totally in one of those moods where i dont know what the hell im doing...AADHFAHGHGHGHGHGHGHGHGHGHGHGHGGHGHHGHGHGHGHHHHHHHHHHH  anyway maybe just a hit test for now and figure it out as i go on itd be nice
+
+anyway lets copy shit out and make sense of it 
+
+something about hte instruction cache accessed from the stage
+
+
+he said that in needs to be seperate memory I have no idea why
+
+and then he said arbitration dont know what that means
+
+he said you need to know what the instruction is, I think that means you need to get the instruction though
+
+he's sayig that it takes longer to read memory I think I know whwy though
+
+hmm I remember this being difficult but I think I know most of this... at least so far
+
+
+I missed out but now he's asked what about branching 
+
+processors got faster I basically while memory processing didnt
+
+data cache misses and instruction cache misses happens seperately sometimes on the backend and some on the frontend... who knew?

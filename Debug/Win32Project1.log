@@ -1,0 +1,92 @@
+﻿  source.cpp
+c:\users\jonat\documents\win32project1\win32project1\src\graphics.cpp(159): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\jonat\documents\win32project1\win32project1\src\graphics.cpp(267): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\graphics.cpp(329): warning C4101: 'testIheight': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\graphics.cpp(329): warning C4101: 'fileChannels': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\graphics.cpp(329): warning C4101: 'testIWidth': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(204): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(216): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(284): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(123): warning C4101: 'testiBox': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(409): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(423): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(434): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(317): warning C4101: 'testiBox': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(595): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(621): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(639): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(672): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(1616): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(1825): warning C4101: 'oldbref2': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(1820): warning C4101: 'oldbref1': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(281): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(285): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(289): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(292): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(298): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(301): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(328): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(410): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(483): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(547): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(548): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(653): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(752): warning C4244: '=': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(516): warning C4101: 'ii_': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(789): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(807): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(850): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(852): warning C4018: '<=': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(858): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(860): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(885): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(911): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(926): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(959): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1061): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1075): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1110): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1073): warning C4101: 'testiBox': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1266): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1295): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1301): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1324): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1332): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1319): warning C4101: 'isLess': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1366): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1395): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1396): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1565): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1568): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1664): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1695): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1893): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1937): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1939): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2233): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2511): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2536): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2595): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2596): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2597): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2598): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2606): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2640): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2648): warning C4018: '<': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(2652): warning C4018: '>': signed/unsigned mismatch
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1882): warning C4101: 'bcnt': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1886): warning C4101: 'stuff': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\source.cpp(121): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\source.cpp(261): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\jonat\documents\win32project1\win32project1\src\source.cpp(272): warning C4101: 'message': unreferenced local variable
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(836): warning C4172: returning address of local variable or temporary: r
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(936): warning C4172: returning address of local variable or temporary: r
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(1005): warning C4172: returning address of local variable or temporary: r
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(1606): warning C4700: uninitialized local variable 'b1Pts' used
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(1607): warning C4700: uninitialized local variable 'b2Pts' used
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(2032): warning C4715: 'testCode::binarySIntersection': not all control paths return a value
+c:\users\jonat\documents\win32project1\win32project1\src\bezierresources.h(1959): warning C4172: returning address of local variable or temporary: thing
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1186): warning C4700: uninitialized local variable 'boxes' used
+c:\users\jonat\documents\win32project1\win32project1\src\source.cpp(173): warning C4715: 'WindowProc': not all control paths return a value
+c:\users\jonat\documents\win32project1\win32project1\src\application.cpp(1568): warning C4700: uninitialized local variable 'i' used
+  Win32Project1.vcxproj -> C:\Users\jonat\Documents\Win32Project1\Debug\Win32Project1.exe

@@ -1,0 +1,689 @@
+cool i can write in this thing and not have to worry about the multiple line wrapping thing that goes on which is nice.. oight
+
+there are the problem sets i think if figure out the problem sets ill do a much better job
+
+apparently architecture and microarchetecture are different, i wonder how
+
+i hope he explains it...
+
+he says architecture is an abstraction layer provided to the software through the hardware, its what the software thinks is the hardware so its like a fake machine for the programmers.. in the machine the ISA instruction space architecture 
+
+so microarchetecture/organizations seems to be the specifics implementations of the computer
+
+he says computer architecture is all about tradeoffs im not sure exactly what he means by that because he goes on to say that you can make big archetecture design decisions that will influence the microarchetecture but i dont understand how that is a tradeoff, i guess that "influence" is a bad one.. 
+also its good to note that is a two way streak the design decisions you make down at the isa will also influence the big a archetecture
+
+so in the ISA there are whats called execution semantics, i have no idea what the hell those are.. lets a finda outsa its the details, like say you have adding is taking two numbers putting them in a register thats not the whole picture there is more to it than that, ie io interrupts we have to say what happens when other shit happens
+
+he says isa has to define how the inputs and the outputs work.. what the fuck does that mean? seems kinda vague to me.. if i ever go over this i need to investigate what he meant by this its 5:48 of some video
+
+anyway ISA also defines the sizes of the data types you operate on, im guessing its like how a a char and a int8 are 1 byte and a int16 is 2 bytes? and and int is 4 bytes and a long is 8 bytes so basically 1 2 4 8 char short int and long, and ints in all of them represented in bits... hokay
+
+hmm he seems to imply that the isa defines the interpertation of the data types which isnt what i thought, I thought that it was defined by.. well c guess not learn something new everyday
+
+MicroArchetecture it does seem kinda dumb well cause it seems like the main purpose of the machine or the microArchitecture isnt to process data, but to service the programmer to make this faux computer.. it just smells like a lot of trouble waiting to happen but um lets move on 
+
+
+it just seems to me like hardware seems to be made in service to the software.. which makes me uncomfortable, because then your making hardsoftware.. instead of just making hardware.. why cant they just make hardware, what would software look like if it were made for the hardware.. the actual hardware... hmmm
+
+I dont know but what seems like a much more sane idea seems as if it would be to make hardware that processes data
+so this ISA model started with IBM what happen was that IBM had like a bunch of computer lines, but you couldnt run the same software on one as you would on the other, so IBM decided to do was combine.. basically not that important they just wanted to simplify their line and they made it so they can change the actual imlementation details while they programed to the ISA important thing to note it was here when ibm decided that bytes should be 8 bits long before then people would call things bytes but they could be four bits 6 bits etc etc oh the name of the ISA was well let me take the full title IBM 360:  A general purpose register (GPR) machine
+
+
+He says something about the binary coded decimal system but he trails off im not sure where he was going with that i dont know.. what he was going to say with that let me investigate okay it was called BCD its pretty simple but a little bit wasteful, the way it works is that you represent each decimal value with half a byte 0000 because its 8421 so what you have is say you want 32 you would write it like 0011 for the 3 and 0010 for the two and together you would have 00110010 and thats it thats bcd, I wonder how you represent decimal though well whatever
+
+I wonder considering the speed of cpus wouldnt it be better to do math vertically?
+well you already have this archetecture of cache right what if it acted like a waterfall, the computer never actually needs to know what its doing, so what if the memory is the only place that 
+
+its interesting with the microarchitecture that was supporting the IBM 360 you have these two machines initially the model 30 and the model 70 for them to support it with vastly different archetecture they would do different things like the 30 had a 8 bit datapath while the 70 had a 64 bit while the 360 isa supported a 64 bit operation so the 30 had to do 8 of the 8 bit operations to support that.. interesting
+
+ok lets just list some popular different ISA's man i really feel like i learned a ton i didnt even no what a mircoarchitecture was at the beginnning, or even how to spell it apparently, well there is the x86, Arm, powerpc, so really the takeaway is you cant run the same software on the different ISA's you know what this means but im just gonna say so yeah but of course you can have your own C implementation... which just seems to bring me to my original point, what the fuck is the point of it???!??!
+// ok that was fun but mostly it was just saying and he did a tremendous job explaining the differences and the need for 
+
+SUMMARY/TAKEAWAY for lesson one
+yeah i really enjoyed that umm basically he just says well we have an ISA which is the instruction set architecture that is the big A or big architecture i have no idea why its considered to have the big A but this is the umbrella fake computer that your software runs on it defines what happens on this fake machine, and the fake machines constraints its the job of the microarchitecture to be the actual machine implementation and try to support the ISA, he talks about the history of ISA's the ISA was made by ofcourse IBM IBM had like a consumer suite a science suite and buisness whatever right but you had to write different softwares for each and you basically had to of made the damn thig to program the thing, unti lthe IBM 360 with that when they expanded they made the ISA he talks a bit about BCD  which is binary coded decimal i liked it i thought it was cool apparently it had some nice percision pretty easy you use 4 bits oh also this was when they codified byte to be 8 bits... solid anyway you use 4 bits to represent a digit 0-9 ooooohhhhhh kkkkkkkkdkdkdkdkdkdkdkdk what ya thinking jonathan so youd have something like 0100 0011 would be 43 and ofcourse you know the the drill its 8421 umm yeah that was most of it then he goes on to say you can have different microarchitecture with different ISA's and lists a few popular ones, arm x86 powerpc etc. if nothing else I learned how to spell Architecture hah.. nearly fucked that one up
+
+
+
+
+
+which to me seems backwards but whatever I feel like it should be the computers job to i dunno just compute data not provide a platform to help the software, it just seems enabling to worse programmers and it makes hardware guys have to do heavy lifting for software guys, when it should be our job as the software guys to do heavy lifting, maybe there was a time when information wasnt as readily available but i think having at least a teir access to the 
+
+
+
+ok he said were gonna start talking about machine models in that they are is what you need to build inside the ISA instruction set Architecture
+
+ok he asks where to operands come from and where to they go? i think if im not mistaken its the registers and they get calculated in the ALU and back to main memory 
+
+wow its kinda weird where you tune out cuz a lot of this stuff i easy i think he asks what type of instructions are allowed, it depends, the nes and what not could only do simple instructions im not even sure it could do multiplies, nowadays you have things that have... sin and cos? maybe 
+
+haha i was wrong apparently you dont even have to have registers in your processor
+he says you can use a stack instead, which im guessing just like a reguular stack in c does something similar?!?!?!????
+
+oh so that makes sense instead of using a register what you can do is use a stack, you take the top two elements move em to the alu and operate on them from there.. its weird cuz i was under the impression thats what it did but that was the machine model.. but i dunno lets watch and find out
+
+its so weird he just pops up a term and doesnt say anything else about it, i think i can do better all he really mentioned that one architecture is called an accumulator, where you have one named register and you have one in memory seems very similar to the way we do it, imma check up on the fish https://www.youtube.com/watch?v=Veas4VD5b54 this is more on the accumulator more the exact way its made which is kinda crazy 
+
+soo.. it looks like what he's doing is just going through the different types of Architectures he is going in increasing in named registers there are ISA, so far we have the stack and the accumulator and next we have Register-Memory, where you name the source coming from memory and an operand coming from a register file, and also you can name the destination i wonder what a register file is lemme investigate so a register file, is multiple registers together used as a single unit. still hazy on that i dont get if that means multiple adders or is that a mix of adders subtractions and what not,  its the register register arch that has three named operands which is weird because the other one had two and an optional.. well whatever
+
+
+ok something i really wanna note here is that you dont need just these four archetectures you can also have memory memory, something like the VAX architecture which was popular in the 70's so you could have all your operands
+remember your operands are your variables
+
+heh.. the Java virtual machine was stack based, thats interesting 
+ok so remember the reverse polish thing.. its like a way of notating an equation, anyway its important for machines because you can put the operands in a stack there you go SHADAZI
+
+he says the stack is part of the processor state, I havent the slightest
+
+ok its something interesting he talks basically with the stack based architecture we have an issue of redundancy becuase youll need values that you can load if your limited by how many registers you have that means youll have to go out to main memory more, same problem different daze.. this is a ISA issue not a microarchitecture issue
+
+
+one thousand percent right i think
+
+ok so to summize really he just goes through the broad types of big A architecture in increasing register, the stack model while being the simpler model, has a problem when youre doing more and more complicated instructions, because it means that their maybe more potential reads to memory.. I honestly dont know how bad that really would be in use, if what youre reading from is the l1 cache, but there you are ummm.. 
+
+decisions to i go the learning route or 
+
+
+ok he's just gonna talk about other aspects of the ISA he then goes into details the instructions you have and we start off with classes of instructions 
+
+the first class is Mov/Load operations
+then arithmetic logic unit instructions
+control flow instructios, branches logic whatnot
+floating point instructions, add subtractions, weird i would of thought it would of been in the ALU
+
+then there is SIMD operations
+
+then he just shows a weird operation its REP MovsB an x86 instruction its a string operation copies part of a string into another i believe, then he just starts rambling about other weird complicated instructions like fast fourier transforms in one instruction
+
+ok another thing ISA needs to consider is how to get memory, and what are the different addressing mode you can use, Im not sure what addressing mode means how you get operands from memory
+
+
+
+// just wanna add a note hizeere
+KUROSAWA - I always tell my people, "no matter how grueling things may be at first, you'll eventually start to enjoy it if you just keep at it. Once you reach that state, you'll be putting in a lot of effort without evening knowing it." And it's true. I might say "ok, that's good enough," but their response will be "just a second. . .one more thing" They're that immersed in their work. Conversely, if you let things slide thinking "well, this won't be in view of the camera," then there's no end to how lazy you can get. You either give it your all, or don't even bother.
+
+
+ better to be off model and dynamic then on model and stiff, stiffness will kill your animation
+ - Aaron Blaise
+
+ the fewest strokes to express a fact - John Singer Sargent
+ painting is a science
+ which it was necessary to acquire in order to make of it an art -John Singer Sargent
+
+  He never attempted to repaint one eye or to raise or
+ lower it, for he held that the construction of a head prepared the place for the eye, and if it was wrongly placed, the understructure was wrong, and he ruthlessly scraped and repainted the head from the beginning
+
+ TODO:: sonic note outlines are too thick on sonic i should thin them out
+
+
+ ok what needs to be done is filling it moving around the fill ness and animating the fill ness, than bits and pieces like fill the inbetweens, undo, taking and splitting the bezier with less points connecting em
+
+ problem is if i dont hustle instead of a few weeks project this could turn into a monstrocity, well so long as it's a working monstrocity 
+
+ // I think the last hurdle, that is the last hurdle where im not really sure how difficult it may be is the filling thing, but even then its just because Im being a bit dumb and dont want it to do tasks of the cpu for no reason i dont know 
+
+
+
+
+ so where are we right now I just finished a blueprint for the box fill, it just needs to play it do the xl xh global which are introduced  when you draw it and itll fake fill it, create a random spot in the middle as the xy probably 300 150 would work  and, oh I need to create the boxrefs and use them, hopefully i can get this done before the end of the night
+ 
+ which means essentially im gonna draw the damn thing and then im gonna let loose with the code right after the release it puts this into motion 
+
+  after that i tackle the triangle fill for each of the boxes its pretty simple really it should be actually the same as the line drawing algorithm but the bottom of it goes to the n/width of the refbox, hopefully i can get that done before the night is over, maybe im going slow cuz im not doing my usual binge coding method... i dunno anyway its gonna be interesting when i have to do planning and thats gonna suck hard for all the tedious bullshit
+
+
+  so i figure i dont know whats wrong but something is up with the splitting so i need to go through and see where it goes wrong i will inspect it and then do something else 
+
+  I wanna see if it one of these has the a list
+  where would a list be 
+
+  i think i must add it somewhere
+
+  im looking to see where i added the thing there sould be a list of boxes or something like box ref
+
+  glbDim? i dont know what that is is 
+
+  found it boxRef
+  // oh i may have left it 
+
+  alright i found the fuck thats actually shape boxes 
+
+  so where i am is i dont know where i put the boxes lemmelook through split bezier to find where i put them 
+
+  fuck splitting up the bezier its a dumb unnessecary idea all i need is to split it where it is and do it at the point, the reason is i need to 
+
+  ok im gonna re write the split just so its easier for me 
+
+  heres what im gonna write im gonna tell it its percentage and a specific bezier and it returns a box, i lose terribly in performance but i gain utility i can use this anywhere and i never have to keep a box i just create the box when i need it... agai problem i need the boxes, creating the boxes every frame is silly, 
+
+  umm im looking at the i2 and im confused what should be happeing is it should be taking the i okay so its taking the i
+
+  okay im looking at what went down here and i cant get a good handle on the situattion ok there i am what should happen is that it should go through and then  take the ith bezier split it it and record it for the first one then for the second or subsquent split for each of th ii
+
+  so i put it into bRef Old and now bRefOld i put this into the new one at the end Bref
+
+  ok this right here just looks like it stuck in an infinie loop but does it even paint the goddamn thing at all? i dunno
+
+
+  having trouble keeping my thoughts straight so what im thinking is im having a bit of trouble finding out how to stop the leak im at this point figured out where the leak was coming from but i dont know how to stop it and i hate hate hate hate hate gpu's i think what ill do is maybe switch it to direct3d and then use something else later or just use the original way to instead of using a vertex buffer, its overly complicated obtuse nonesense that bars me from something relatively straight forward... i hate it.. dunno if i mentioned that.
+
+
+  so i guess ill just go on with the software renderer
+  
+  nope I fiured it out how awesome is that no more leaking, ok so now I just wanna put a thing that just waits 30 or so ibetween fills
+
+  hey future me how is everything, you end raising that money, must of been tough with that money situation, kinda seems like you never get a moment to code or do anything even though youve set so much time aside, sure does suck to be you, well at least that stuff is behind you right? hope you didnt have any accidents or anything, and itd be super cool if you fixed the car i hope you did, teehee, anyway 
+	
+	as it goes the best i can explain it, it was working now its not, um what the problem is, I honestly have no idea, I was working on the collision boundary thing, which it seems to ignore completely I thought changing and limiting it may be good, instead it just broke it
+
+	Jeez man I worked forever on this and it seems like I finally got something that works um i really wanna write down what went down but provided to say it was a comedy of errors around Appstate->shapeBoxes, shpBoxes, and looping in the static count thing, speaking of which I also added another static and i think one more one in the after i draw the first bezier one
+
+	few problems, first it doesnt work sometimes, other is that it doesnt get inbetween to fill in boxes
+
+	2 big problems seem to be taking place the first is that the box splitting doesnt seem to encompase the actual thing which is weird, dont know what to make of that i may rewrite the box fillin function just to be extra certain, the next is that when im filling with the boxes, the collision isnt working? which again seems odd because it works i think..
+
+
+
+	TODO:::::: so i fucked with intersections after i found out how memcpy actually works and I have to see if that actually still works I have no idea so yeah fun times for all
+
+	so here is what im thinking it seems like what I can do is a scan line approach but i can make it do a sort of scanline box kinda thing
+
+	so then it makes scanline boxes and then on top of that I can make it fill a box in, I think this scanline box method may be better than the box fill, but the box fill has some other potential uses so ill kepp it around, 
+
+	level of difficulty: not fully known i have to try it out, getting the basic thing working though i think i can pretty reasonably guess I should have that in one or two tries, its just a modified scan line
+
+	the unknown comes into place when bezier curve bounding boxes intersect but even that shouldnt take more than two tries, 
+
+	the last bit of dificulty is intersection points, but i think i may have tackle that on the line fill part of it, so im not gonna worry about it
+
+	so its like c level difficulty, with possible b- grade.
+
+	but to really bulletproof this it may be a grade difficulty so where gonna ignore a lot of problems for a while until we document it fully, or just so goddamn annoyed the thing
+
+	then the next step is to tackle the line fill part which i think i have a sort of outline there where i already took a pass at it, I also need to add into the possibility that two of the the curve boxes intersect, if that is the case it should try and triangulate the the thing, maybe Ill do a clipped ear method, its pretty rare so i dont think it should matter that much and Ill even put it as a place holder
+
+	actually ill just write some crappy version of it, like check where it would have lined up with and then just move the thing up to its intersection, based on the lines formed by it, I can just guess, and retriangulate the damn thing so they match, but ya knows not too important
+
+	thats b grade possible difficulty it might also be easy since i think i wrote it somewhere, so who knows 
+
+	that's it.
+
+	the next stuff is clean up beautification, thats like kerning thick and thins/pen pressure, and making a timeline and what not, adding importing and exporting images , then I gotta get it ready for presentation, undo, with degrading memory, and perfect memory where I go into flash and start locking down what I want the damn thing to look like, and feel like then after that I need to change the the filling and lines to be raster at points, its really honestly a test bed for a much more complicated system, but one I dont know how much of it is actually needed, and will deal with it as needed
+
+	but yeah I think it wouldnt be bad to start a schedule nothing seems dire or requiring a lot of research from this point, except i have to change the cursor a bit, and use some fonts, that seems kinda scary, dealing with windows
+
+	oof my crazy line layering system, 
+
+
+
+
+
+
+
+
+
+  soo i dunno what i wrote before here but the tasks at hand go here
+
+
+  TODO:::::: so i fucked with intersections after i found out how memcpy actually works and I have to see if that actually still works I have no idea so yeah fun times for all
+
+
+
+
+ok i read over my notes... they make no sense. so yeah were gonna split the bezier up, and get the bounding boxes we're only handling left to right, and top to bottom bounding boxes on the first pass then you can figure out the rest and we'll do a clockwise test then a counter clockwise so it should be just the code i have 
+
+yeah im just gonna do two things
+
+im gonna go and do the split then after that im gonna make it so it makes the triangles on the box im just gonna guess at the split just three for now and we'll ofcourse make it variable not fixed
+
+it goes since the first test is left to right we ask is it starting top left or bottom left corner, or somewhere in between, you also have to check the ending one  because thats a lot of work
+
+then after that all i have to do is take that code where it makes a fit box for the scanline and see if it works, it should work with the existing code i have now
+
+then 
+
+
+overview i thought about it and you say ok whats the top boxes and then you go whats the top boxes and the one most to the left, then you say hey am i inside if i make box anywhere on this row, then you check the next row
+
+
+ok its a little confusing but yeah it favors height over left ness how that translate into ode is something i need to figure out though
+
+
+note:77 well it takes the heighest boxes, then it looks to the left most then you use the bounding box after you've found it and you say anything that starts at the top right of this ref box, then that same y and the x of the right side of the bounding box, and the x and y of bottom right of the ref box, then same y and x of the of bounding box again.
+ first we want the closest/leftmost  top left corner t for one of these in the collision thats should be first it has to be to the right of the referene rect and less than or equal to the top side the reference rect if there is nothing inside that initial one no collisions then we are definitely not inside the shape draw it
+
+
+ were gonna then see first see if there are any top right or top left corners inside the box there, if there are take the heighest thats our new low and with it our new bounding box,  now the only possible boxes are boxes that touch the right edge of our reference box and top corner is less or equal to the height of the collision volume the only thing we are unsure of is whether or not it touches the right side of this new collision box, so we ask, and there should only logically be one, check that here, if there is i have something i need to consider and it should stop right there, but hopefully not, so we want to check the right side of the box in there is equal to the right side of the colision volume or the left side of the left reference box/ same thing if its not just fill that square
+then do it again starting now with the low part of the box as the high of the new collision volume, if you dont find anything move on, taking those out of consideration
+
+
+and when you want pure scanline it goes like
+
+ boxes are in consideration 
+so we say the boxes that are in consideration are the boxes that occur in the bezier between the intersection 1 2 3 4 1
+
+
+my mind is wandering like a biiiiiiiitch so im gonna try some notes just to keep me up to date
+
+ok so i looked over the thing and i so just make sure that the gap works and then i will see 
+
+
+I think it should work i just got to make sure that it is right in the ymax also i can add a test for ymin 
+
+ok so its simple he's just saying that he went through the different stages the computer goes through in the 3dAPI
+
+no no he's saying the stages that what your commands go through in the graphics pipeline 
+
+it works, its a little tougher but I think it might be good since i can do both I think it might be easier with writing though, so 
+if i got this right all the commands you made, the command buffer, all of it , it goes through memory, whether it's the normal system memmory, oh wow this really isnt that bad I get it, so he's just saying I just dont understand what he means when he says it goes through memory, instead of the fact that it is memory, because I dont know if he means that its passed from main memory/cache which he called system memmory to video memory... buu I dunno
+
+since GPUS gotta do things different the way that memmory looks like in a GPU is ummm different, that's all he says
+
+
+ok this is very doable, but i dunno if it'll help with doing it longer, and help with wandering mind... but maybe
+
+I just know it works 
+
+wow so memory moves real quick like so core i7 2600k moves 19 GB/s and thats that
+
+
+he just first just starts off talking that the 80's style risc pipeline isnt a good mental model for todays cpu's
+
+I think its possible i dunno if its maintanable or has any added advantage of any other low thought thingy mgig, like detailing or whatever
+
+but it may be benificial to tackle it in waves see if i can get a general impression, then challenge the impression, then time stamping and going in further detail how like I used to go 
+
+
+
+the idea is that you chop the thing into 5 pipeline stages
+
+
+
+so I dunno where I am, I have no idea  cuz i left myself hanging yesterday
+
+Im gonna have to go over what Im doing
+
+so Its going good so far it looks like it gets where the boxes are through the gap... ha I said gay... dont know why
+
+yeah so I think s far so good lets see if its enough.. honestly this is simple i dont know why I am having a time of this
+
+
+oh I remember where I left off, the problem I had before was with vcnt, I keep umm recalculating vcnt based on how big the damn thing the col Volume, and every time i figure out a piece of it I make it smaller so vcnt
+
+ok just checking if there is a gap so its gonna chek that out at 736
+
+ok at this point we can check this, because what we're expecting is that it will fill in a top right box... only problem is it will go through the loop over and over again... so what we are expecting, iiiiisss that it should go and fix mabox, because I believe that hasnt been set, and the beauty is we will know if its broken
+
+also I can tell you what I should be expecting for the box that I make 
+
+so Im gonna do that and Im gonna change it so that if the box that i make xh is equal ctest xh im gonna say hange ctest. xh to be ymax? i think yeah
+
+599, 607, then ctest 172, and 187 this is wrong, its just that oldYmax was never change
+
+ok im gonna go with that oldymax should always be the smallest y possible
+
+
+ I dunno if this is working, I know its working for now but I dunno If it is helping focus my attention problems 
+
+ I havent made oldymax
+
+were going cheking the testibo
+
+ 212, 217, 142,157
+
+ it messed up because i wanted to limit it to the box but somehow it drew outside the box, 
+
+ i think i solved most of it, except if the box is thinner than my box, it will tunnel through it, i think I can fix that laterally pretty easily 
+
+ now we want something else there is the other problem and thats the staggered step problem and im not too sure how to tackle it, which kinda makes me wanna go pure scanline, well i think if i can solve the tunneling problem it may be possible to have it do this then after go through and scanline the rest, it may give me an edge because i wouldnt have to look for inside and outside 
+
+ and itd look from the top left most box to the closest top right most box
+
+
+
+the planning idea didnt work out great so where gonna do a little something different were gonna go back to what worked best but didnt seem so at the time we will code in there in a different place and copy it over while planning what I need right now it fills ish and we'll do up fill with the method i described right fill bottom fill etc 
+
+
+
+
+maybe there is a way so that i can at least get a page or a hundred lines of code done a day? what you mean, because wouldnt that be dangerous coding in all that shit and not testing it? yes it would and I am all for a hundred percent completion but even if i dont have it all right just like the test code that i wrote I can do other stuff like i can see
+// i can then again get it on to a time table which a desperately need but the way im approaching it now since I do a play and test kinda thing it doesnt work, i think that most of my method is plan out what im gonna do roughly then i do a run through in code that changes my mind completely then i test it and work it till it actually takes, each of these takes like an average of 2 good days problem is my notes kinda sucks, but the test code isnt bad, bad part is i am coming to a point that the code is kinda easy and hard at the same time that i dont necessarily have to go to the blackboard to think of a plan of attack im thinking what if i throughline this process and then i can put this onto a tight schedule ok eventually i will need 9 by 9 scaling and all that but it is scaring me at the moment so im just gonna ignore it and just get images you can click on that change basically for buttons... how do i do a ui im not a 100.. doesnt matter i think ill just treat it as the last thing you draw 
+
+
+ok so what i would like to do before the day is over is probably find out what i need doing so i think the options are well for one 
+
+
+try out the triangles in the box making thingy miggig get that in there id like to get that done i dont think itd take that long, or at least figure out where it should go 
+
+
+
+
+
+
+
+
+
+
+
+//this one seems like a pain the ass... 
+
+
+
+then i need a plan of attack to figure out how Im gonna get the multiple beziers done I think having it create a premade bezier would be best so I can use the fill method Ive already made.. 
+
+there are a few things that need to change 
+
+
+ADJUST BOX:: 10 minutes no test just 36 straight in its pretty easy and Ill forget if i do it as a test
+
+I need to change adjust box to do an up check,
+and then I need to check and make it loop
+I  think I should be able to skeleton that out
+
+
+
+definitely line fill but Im not sure its gonna be done so Im gonna just hink about it and write down a quick refresher plan and then get right into it
+
+also I figured out how to do the line fill
+the only tricky part is Im not sure how to handle taking the things out of consideration
+
+not crazy important though
+
+so on the docket really as a test of the ability of this plan to work is try those out see if i can get them done and get them done in a timely manner, I think a way I can do it 
+
+
+
+whats on the docket I am thinking about the ui interactions and am wondering if i should use function pointers for custom interactions
+
+so I just wanna look up real quick if thats what unit testing is
+
+Im gonna get back to driving around 7:45
+
+lil late.. but anyway what went down is this i at 140 ummI i did half ass job ish I need to check the bounds of that for block so that the xl will... no the xl will always be in there Im gonna put another break in case that doesnt happen 
+
+oh I started thinking i may abandon the adjusting the box to see if its flush because i thought of them in blocks originally, but it just gets more complicated when you think of them series of squares, you'd have to check if one is touching the one to the right and touching one to the right its a bit of a nightmare, to the point just creating the box and seeing if its outside is just a hell of a lot easier so Im not gonna worry about that one Im gonna leave whatever error it gets and deal with that later
+
+
+WEEK GOAL::BY  WEDSNESDAY?
+so I would just like to get the thing set up to scanline what I have now and eventually insert scanline inbetween the two beziers that I make, then try to find the highest box and start filling from 10 pixels underneath see what happens and just ge that to work, its a lot of work and would ordinarily at least take me two weeks... surprise me 
+
+
+what am I thinking for today well i think i can, Im doing two things right now I wanna take like ten minutes look for a method of doing the scan
+
+oh I want to take the two ends and pick where the highest is and and that will be my low then Im gonna try putting in this test scan line see if it scans
+
+so I think right now Im gonna replace a few things
+
+
+one I wanna push in the highest value so it doesnt have to look for it every time with an if statement,
+
+ thatll take seconds and then I wanted to do that all while watching casey's stb thingy, 
+
+and spend 10 minutes looking at old magazine pics and what not 
+
+eyyallsso because that shouldnt take that long, I think im gonna fully replace the other one.. createbezboxes i think, and at the end call it again, honestly they could be in one function but well whatevs, i think i may just do that combine em but first i wanna see if it works
+
+so heres the docket the adjust box thing should just work I wanna make sure it scans and fills just one, thats the goal for today,
+
+
+
+
+10 minutes  2:35 finished on time
+look for fifties magazine shit refs and stuff
+
+10 minutes 245 I failed because vscode sucks sometimes
+but just find fillboxes and run it, replace with testCode:adjustBox  it should work, if it doesnt make a note about it and move on
+
+10 minutes 255 late on this too poops
+start structuring the looping put in the highest float
+
+10 minutes 58 108
+find fillboxes and run it, replace with testCode:adjustBox  it should work, if it doesnt make a note about it and move on
+
+so a complete bust and i hate myself
+
+
+// all my work yesterday was deleted hurray
+
+
+ok just test it see what happens i should be just able to write the box in like 2 minutes
+
+so 49 check back in and tell me how it went
+came a little late not sure what the problem is im gonna go through do a little check see if there is anything going on with the box->
+then Ill look for other problems
+
+im confused because it seems to do everything right lets try again cuz i think i 
+
+ok i figured it out its always annoying because you get it and youre like that was dumb but i set vcnt to 0 so here we go agai
+
+55
+
+apparently some boxes dont share verticle coordinates... makes no sense
+
+ok nother stupid mistake later just check in the morning if it draws im bushed right now
+
+so I fixed the problem from yesterday and wanna see what I get, so I can start structuring the loop and I wanna continue watching the kerning 
+
+so lets avoid getting discouraged
+
+5 minutes on testing  
+Finish at 39 I failed on this its hard for me to keep track finished at 47
+
+I found a potential bug and Im gonna test it
+then grab some water maybe watch a show or something so 
+
+
+5 minutes try and fix to get the highest xl
+see what happens 9:54 YESSS!!!
+
+HAZAH SUCCESS
+
+
+5 just pretend it works and comment shit out 
+finish at
+
+ok i think quickly looking at it is all we have to do, at least for a simple shape is run it again.. for multiple highs we'll ofcourse have to be more clever.. or maybe not.. because if I get the highest xl, potentially all it should do is  ok so 10 17 and then Ill break  for 10, to 20 
+ok two minutes over
+
+
+no longer than 11:15 im thinking 25 since i cant think of
+
+what I wanna do when I get back is find the createFitboxes signature copy that over to a new file BezierResources.h, and rename BezierResources, to BezierResources.cpp eventually I could probably get rid of it... yknow what.. nahh Im just gonna copy its function signature, cuz I think im gonna kill it anyway
+
+so that should take five 
+
+so just get the function signature and copy it see if ti works 32 ok i did that need to debug and figure out how this is wrong gimmie ten 41
+
+
+ok i did that on time didnt record it, it's doing something stupid and i need to debug it, I think im gonna rest for a bit, cuz I dont wanna overexert, and this is really working so far HAZAHH
+
+but first 2 minute so fifty im gonna try running it twice
+
+ok it's giving me gripe so im gonna take a break, indeterminate, just to chill some pressure off my mind just dont go past 5:00 thats ridiculous, 
+
+
+Im thinking of moving over to 4coder I think that debugger is a clincher so I'll start watching casey's video's and start making the switch, it really doesnt matter much since it is just a text editor
+
+but when i get back you're gonna want to step through the code
+
+
+I wanna dick around for just another 10 minutes then ill step through see where its fuckin up ;dslkjfdls;
+
+
+
+
+
+ok i saw what it was doing stuck in a infi loop so i fixed it wanna see whats going down test it should test it in just a minute
+
+ok now we got visual errors to deal with
+
+somehow worked? waaa?
+
+ok lets get it buuusssy so next what we want to do is do it from intersection to intersection 
+
+Im honestly stunned it worked.. uhh yeah so what we need to do nooowww is some magic
+
+I changed some poop before so that the intersection system may not be working... so we have to 
+
+a) make sure the intersection system works
+
+b) add in multiple intersections 
+
+so after that i think its just gonna take some smoothing out and finagaling till poops starts working well 
+
+
+I wanna see how the intersection system is doing right now and just take a quick stab at multiple intersection see what happens... i doubt were gonna get a double.. but if it does work jeez i have been wasting my time with other systems 
+
+so im gonna erase the filling and see what happens
+
+ok intersection system works!! yay lets see if we can get 2 of em goin
+
+ok i just wanted to get a rough of the damn thing going strangely enough were only gonna look for one intersection between 2 lines and so... this should work, i say dont change it on the grand scale just on what its searching 
+
+it may not be that hard... hmm
+
+i dont know but i think i may have solved the thing.. or done something
+
+so whats on the docket, I uh did it I made the thing I wanna watch some more of that handmade 4coder for a while.. then im gonna get this working.. honestly i could go forward without a better algorithm, but its just so bad. yknow i should really go over all the algorithms that were annoying if I treated them with such habadash as i did with this one, usually they'll have some trace statement around em 
+
+
+12:50
+just test it thats all i got for now. see if the changes broke anything, Ill have to inspect it for real at some point, but until then
+
+// TODO:: get rid of that || true in bezierIntersection
+
+//hmm i wanna do work faster as well i think I can try a few things lets first do a constant viewing of something that lets me work indefinitely... usually then maybe after i solve a problem I can try first a copy then a rewrite,
+
+
+
+hmm i started back on break earlier than i wanted I should probably give myself a treat or something.. anyway 
+
+yeah since speed is something that needs some immediate attention Im at 28 lines bt
+
+ok so 2 minutes i just wanna run it see if it works
+
+poop i thought id get lucky.. I did not
+
+
+i wanna just chek what happens to the bref and why it isnt the new one
+
+i thought itd be easy to find could not so im just gonna step through tthe code im gonna check in at 38
+
+i dont even know why i did some of this junk its so dumb
+
+ok so herers the deal i feel like this is a dead end it takes a long time and its dumb, so instead
+
+ok i just wanna write out basically whats gohnna happen  gimmie like 5 minutes then Im going back to doing nothing 
+\
+so finish  at 58
+
+
+so first it takes the bezRef poop its got all the bezier makings so i take the first 
+
+ok im gonna take some operator overloading put the code there and call it a bit
+
+so first we do that we cut it in half and check if they intersect with either of em then, if not we divide them in 8's at first, it should be overkill im hoping, and see if and see which 2 points have the least square and we'll see if its less then a pixel distance
+
+
+TODO::
+also were gonna do a third possible solution to the intersection problem its just a binary search, except its square distance, its the same code of the altered search that I made only it asks for distance, it should work nicely i think and just test the heck out of all three of them to see which is the most effective 
+
+
+// ok ive been doing a lot of crap lately so Im gonna do some real work for a bit, were gonna ignore the fact that the algorithm is all sorts of stupid and just use it in order to find a singular intersection. because after all that is fine, we can put some more logic to that leater
+
+umm not much just gonna check how we're going with the updated to search through the thing
+
+i think i can get to the point where it is done... aka it fills a shape when I tell it to essentially it just makes a new bez from the bez's i tell it to consider which are seperated by the split, but honesly it doesnt have to have a split and I wont have it split, I just will pretend it splits three by finding its colision and making a bezier from the points that considered, a little more work and fancy but lets see what we can do
+
+so first on the docket I think i wanna spend like 
+
+so you mean like a rough outline of how much work Id like to do
+
+well i know the goal I wanna get a shape filling and what that 
+
+which is a bout 45 minutes of planned work high estimate. 
+
+
+I wanna see if i can get the thing working with the new code
+ok I think i just have to run the thing and see whats wrong 5 
+
+were down to 40 53 we have till 58 to see whats wrong
+
+there was somethign I wanted to do.. oh lets actually run the right function 59 and change the names ok ill do that first cool finished early 
+
+now I wanna see what happens when I play it should take five 
+05
+
+
+oh I wanted to change it to the ends
+
+ok we found that it hasnt done a damn thing
+
+ok It was one of those silly stupid errors that keep you up sine you know you did everything right but still for the life you figure out why its gone wrong well eventualy i figured out what it was and now im ready to move on FFFUUUUUUUUUUUURRRRRRYY
+
+ok so ooooooooooo now we need to split up this bezier and make the bezier search for collisions between the 
+
+im thinking of discritizing it and setting myself up for success... but naahh that seems like work, were just gonna copy our split bezier function twice put them in two sepereate arrays and check one box's arrays against the other box's array, only problme the split bezier doesnt give complete data, which we shall need, so first just complete the data
+
+
+TODO:: the bezierSplitting all thats wasteful with that big pointer in there and what not, remember we have a lot of memory to compact doing this
+hopefully not too long lets alot 15 minutes first 5 find it add the bezier as its *bCurve, and theeen.. again this is wastefull  the t1 t2 
+
+00
+
+ok so what needs to happen now 
+is split em find the ones that intersect tell them their daddy run them through this formula 
+
+apparently i did that.. super cool
+
+
+ok im at o7 and havent set it up i just smoothed a thing or too
+
+ok were starting at 3:14 i curious how long this is gonna take me to just block it out were  lets hope for 5 minutes??
+
+
+im three minutes over five so in five i just set up the splits and nearly finished the for loop ill be done by the :30 hopefully just a minute
+
+
+unfortunately had to change a few things about it ended up taking seven minutes but not horrible for me moving on 
+
+so now we know which ones collide with which we just have to figure out where so we have to change binary intersection to fit one bezier even
+
+ok its really simple moving shit around type nonesense really brainless the debugging wont take long so we can take some long strides were gonna go thoguh the changing of the file and theen were gonna go through the looping then the changing of the function all in one go not gonna check it and then were gonna go through some of the grabbing of the bezier thats gonna be a touch more complicated later but then those points.. see thats where it gets confusing based on what im using if its boxes or ultimately lines determines whats worth grabbing 
+
+
+// ok this is gonna require actually debugging 
+were just gonna grab the split point in t, where it was in the box  split it at its relative box coordinate and display it, its a bit of a bitch but if i can just rough it out before i go out and get food i can rough out the painting which would be just get me the highest lowest box
+
+// fuck that, thats a lot of work for ultimately a path im going to abandon
+just brute force it push the boxes in that im going to need.. still too complicated because it hones 
+
+// as soon as I get the intersection point im gonna do this if my absolute t intersect is  < .5 of the ref Im gonna ask for og's bezpts[0] and higher were gonna ask for og's bezpt[1] then we just make a box out of that and hand it back ... it should work on most it should ultimately do both 
+then get the xl and xh and yl yh
+
+
+so im thinking it returns the t's for each collision well just do a v2 because that makes things easy even though its not.. that.. umm ok so i think nothing to it but to do it
+
+im thinking 15 again lets try for 40 GO
+
+three minutes over not bad umm 
+
+Im getting better slowly but surely
+
+ok good job but my brain is d
+
+
+Im not really sure what
+
+so I think the tasks for today not much because filling the damn thing is such a big deal Im thinking that's really what it is get that working fully and switching to 4coder, which means it would have been great if I finished it yesterday... or at least compiled it but I honestly dont think there is that much complicated debugging unless there is something really obvious that I miss it should be for the most part something that i can reasonably handle on my own
+
+
+so far sooo good umm lets do a little bit of research again how to set up a project
+
+
+so what im gonna have to do is that i somehow messed up that function splitBezier, dont know how but I royally fucked it even though I was just supposed to um 
+
+07 
+
+we're at 32
