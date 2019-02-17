@@ -25,10 +25,8 @@ namespace whoKnows
     
 }
 
-// this was weird but i didnt wanna have to keep seeing all the translations i was doing on the basis bases? whatever so i did this strangeness, I dunno if it has any performance hits but yeah it takes the = and overloads it seperately for the y and the x
 
 
-// I made some changes oh wow... isnt that amazing 
 // god i really hope i didnt go through with that kind of operator overloading... its so confusing in practice... assignment should always just be a simple copy.. its too much mental realistate to do crap like that.
 
 //TODO::z i dunno but i think this should probably be moved to the gpu but its nice convience thing right now
