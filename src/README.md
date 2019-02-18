@@ -2,7 +2,7 @@ WI
 
 
 
-  HOW DOES IT WORK? well all an animator has to do, is draw to frames and the program animates between them. the program can figure out where a bunch of the lines will go but its a good
+  -HOW DOES IT WORK? well all an animator has to do, is draw to frames and the program animates between them. the program can figure out where a bunch of the lines will go but its a good
 idea to tell it manually by constantly flipping, between the keys, which is something that animators already do. Now at this point I would have been perfectly happy with an application that just would simply
 automatically tween between frames, great.. but we get some unintentional benifits because of what we have done, first, despite you just doing two keys, most of the time your third key isnt that much a departure
 from two of your keys, and since you've set up a tween already, you can just copy any one of the miriad of frames you've generated to make a third image, erase and replace the parts that are necessary, to make a fourth
