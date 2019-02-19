@@ -373,7 +373,8 @@ struct Application_State
 	float bezDiv;
 	unsigned int numOfBoxHndler;
 	//lines lines[15];
-	bezierCurve *selection[30];
+	__int16 selection[50][2];
+    __int16 selectionCnt;
     bezRef shapeBoxHandler[50][200];
 	//bezRef shapeBoxHandler2[500];
 	//bezRef shapeBoxHandler3[500];
@@ -391,6 +392,9 @@ struct Application_State
 	// honestly this is really the only data that remains
 	shape AppShapes[90000];
     // 40 represents the number of 
+    
+    // just so we can select up to 50 different bez's we can get more though
+    // I wanted to do a pointer but it gets kinda expensive and they'll never be that many selections tons more than 50 
 	bezierCurve bezierCurves[MAXFRMS][MAXBEZ];
     
 	bHelper bezierHandler;

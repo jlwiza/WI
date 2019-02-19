@@ -19,7 +19,7 @@ namespace whoKnows
     bool isTrue = false;
 }
 
-namespace whoKnows
+namespace whoKnowss
 {
     bezRef someMoreCrap = {};
     
@@ -204,7 +204,13 @@ void drawLine2(v2 pt1, v2 pt2,v2 pt3,v2 pt4, float width, v4 color, Application_
 }
 // wow this is actually really really easy, except i dont know where the bezier is I may be better served getting a pointer the bezierCurvehandler, the frame and position of the first and second 
 
+// I initially had the idea to move things around for cache performance considerations, I think that idea now is kinda short sighteed I may just wanna do it and keep track of al the links.. expensive yes but i think the other way is a shortcut thatll end up costing me more... but there is good knews I can make it a one dimensional array.. or i can make it a one dimensional array later.. and let me just trim a lot of the premature optimization crap out of the way
+
+
 //FrameCurves is the number of reserved frames on each frame, its the first thing that I have to check to see if it works, also the from and to are [frms, "layer"]
+
+// ok were just gonna seperate this out so it goes into a different 
+
 void bezierTween(bezierCurve Blist[MAXFRMS][MAXBEZ],unsigned int *frames, int *frameCrves, int *from, int *to)
 {
     
@@ -1867,7 +1873,15 @@ bool ValueCheck(Application_State *AppState)
                                 v2 p = getBezV2(&AppState->bezierCurves[cfm][i],BezierCuveType,j,jj);
                                 // TODO(JON) nice and easy just get the squared distance soo i don't want this 
                                 if(DistV2(p, AppState->mousePos) < 15.0f)
-                                    AppState->selection[0] = &AppState->bezierCurves[cfm][i];
+                                {
+                                    
+                                    AppState->selection[0][0] = cfm;
+                                    AppState->selection[0][1] = i;
+                                    
+                                    //AppState->selection[AppState->selectionCnt][0] = cfm;
+                                    //AppState->selection[AppState->selectionCnt][1] = i;
+                                    AppState->selectionCnt++;
+                                }
                             }
                         }
                     }
