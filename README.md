@@ -4,7 +4,7 @@ A C++ Vector Animation Program, Utilizing traditional Animation principles to he
 
 
 I think one notable feature is that it doesn't use any third party libraries, its built pretty much completely from scratch minus STB image
-importer. I honestly think it's just easier that way. Nothing too out of the box thinking with anything, except the features themselves. In other words if you see it running it's more that's 
+importer. I honestly think it's just easier that way. I'm also using a unity build helps with compile times, and I frankly just find header files superflous, and makes refactoring incredibly tedious, Nothing too out of the box thinking with anything, except the features themselves. In other words if you see it running it's more that's 
 an interesting approach at the problem, rather than how did he do that.
 
 WI came about because I was playing around in programs like flash and toon boom in this interesting way, where it
