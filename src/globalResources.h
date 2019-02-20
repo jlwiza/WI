@@ -21,7 +21,7 @@ clock_t start, end, total;
 
 typedef BOOL WINAPI wgl_swap_interval_ext(int interval);
 wgl_swap_interval_ext *wglSwapInterval;
-
+// well i ruined it
 
 
 

@@ -1,4 +1,6 @@
+#pragma once
 //#include "Application.h"
+
 #include "Graphics.cpp"
 #include "BezierResources.h"
 #define M_PI 3.14159265358979323846
@@ -2970,6 +2972,7 @@ void Application_Update(Application_State *AppState)
     
     static bool gfxStart = true;
     
+    // seems like we've decided not to draw anymore.. interesting choice
     if(gfxStart)
     {
         Graphics_initTexture();

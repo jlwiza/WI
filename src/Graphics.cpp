@@ -291,6 +291,7 @@ void Graphics_UpdateTexture()
 	float positions[12];
 	float textCoords[12];
 	int slot = 0;
+    // what?! why is it just vertex shader fragment shader? Ill have to write this up so its not fucking retarded.. maybe i dummied this
 	const char *vertexShader = "Vertex shader";
     const char *fragmentShader = "Fragment shader";
 	unsigned int shader = CreateShader(vertexShader, fragmentShader);
