@@ -2888,6 +2888,7 @@ bool ValueCheck(Application_State *AppState)
                         // not sure why i have two 
                         ends= 1/5*(curvePoints*(int)(*numOfBezPts)) ;
                         float tgtSize = 5.0f;
+						
                         // parently you dont get around the total length of the thing.. luckily i can calculate the the length and have the divs 
                         // so all we have to do is just guess let
                         if(!isBeg){
@@ -2979,7 +2980,7 @@ void Application_Update(Application_State *AppState)
         gfxStart = false;
     }else
     {
-        Graphics_UpdateTexture();
+        //Graphics_UpdateTexture();
     }
     
     if (AppState->GfxNeedsUpdate)

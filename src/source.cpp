@@ -273,7 +273,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR commandLine, int cmdShow
                 io.PenPressure =(float)io.MouseDown[0];
             }
             AppState->mousePos = io.MouseP;
-            AppState->PenPressure = io.PenPressure;
+			AppState->PenPressure = 1.0f;// io.PenPressure;
             if(AppState->PenPressure){
                 // i dont think i should put this here but i am dumb so you know
                 AppState->canFill = true;
@@ -288,7 +288,7 @@ OutputDebugStringA(message);*/
             
             
             Application_Update(AppState);
-			
+            
             end = clock();
             double total_t = (double)(end - start)/CLOCKS_PER_SEC;
             //trace("\n\n\nExit program time = %f \n\n\n\n\n", total_t);
