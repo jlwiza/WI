@@ -2676,12 +2676,15 @@ bool ValueCheck(Application_State *AppState)
                     }
                     
 #endif
+                    
+                    
                 }
                 // TODO:: this is where we made the test code for the filling, I have to add multiple intersections and multiple splits aswell see how that works with more than just one bezier going through, however you feel like testing it man
                 static bool testplayed = false;
                 int cfm = AppState->currFrame;
                 if (AppState->frames[AppState->currFrame -1] == 1 && !testplayed)
-                { // remember to check to see if the thing is clamped
+                { 
+                    // remember to check to see if the thing is clamped
                     testplayed = true;
                     bezierCurve b1 = AppState->bezierCurves[cfm][0];
                     
@@ -2692,45 +2695,12 @@ bool ValueCheck(Application_State *AppState)
                     glbDim.xl = AppState->bezierCurves[cfm][0].bezierPts[0].x;
                     glbDim.xh = AppState->bezierCurves[cfm][0].bezierPts[1].x;
                     
-                    // ok i want the shape boxes but i want to put the the shape boxes into the bezier itself.. or maybe not that may be a bad idea but itll work for a while till i decide to optimize it, i think optimizing early will make it harder to program so yeah stuff
-                    
-                    // bezRef box = {};
-                    // testCode::adjustBox(&box, AppState->shapeBoxHandler,&numOfShapeBoxes, AppState);
-                    
-                    // createFitBoxes(box,AppState->shapeBoxHandler,&numOfShapeBoxes,AppState);
-                    
-                    
-                    // for (int i = 0; i < 7; i++)
-                    // {
-                    
-                    
-                    // 	box.yl = box.yh;
-                    // 	testCode::adjustBox(&box, AppState->shapeBoxHandler, &numOfShapeBoxes, AppState, true);
-                    
-                    // 	createFitBoxes(box, AppState->shapeBoxHandler, &numOfShapeBoxes, AppState);
-                    // }
-                    
-                    //	AppState->boxsize = 15.0f;
                     //floodFill(300.0f, 240.0f, {}, {256.0f, 256.0f, 0.0f}, &numOfShapeBoxes, AppState);
                 }
                 
                 *tPts = 0;
                 AppState->bezierHandler = {};
             }
-            
-            // ok where do i think i am i think i am at a point where the damn thing should work after a bit of work, with testing and iterating i can get it drawing probably before the end of the day, which is why i like working with errors // its stupidly unoptimized but ive layed tout the data in the easiest way to poke at it and try and change what is going on... so
-            // geting the damn thing fixed and working i think i can get that by the days end.. optimistically even with the fancy corners, which arent even necessary i have some ideas round that ... okay
-            
-            // it should definitey draw with you, because surprises are dumb, makes it much easier not only to draw but also debug
-            // ok so you have two turns per bezier pts, you can and have the option of creating a new point at one turn if you feel its neccesary but it
-            // should be fine
-            
-            // I think im in a lazy mood thats alright i wanna do
-            // a two pronged attack on this lets look at the microarchetecture course
-            // and this simultaneously this is mostly set i think i just have to compile it and it will give me some problems that i  to solve
-            // so cutting and filling are two biguns i  to solve to get a testible showable model
-            
-            // but yeah those are the two biggest of hurdles i think, cutting isnt bad but filling maybe difficult to visualize, and maybe hard to optimize.. and since ill be filling 100's if not thousands at the same time it may be a problem
             
             // TODO:: tell me if this is DUMB, because it smells like its dumb
             // this can stay here
@@ -2781,6 +2751,8 @@ bool ValueCheck(Application_State *AppState)
                 // so what the fuck is going on 
                 
                 float tsize = 5.0f;
+                //TODO(JON): temporary for testing please delete
+                //AppState->bezierCurves[cfm][1].ix[0].isCutting = true;
                 
                 v2 pt[4];
                 if(f != 0 && AppState->bezierCurves[cfm][f].ix[0].isCutting){
@@ -2788,7 +2760,6 @@ bool ValueCheck(Application_State *AppState)
                     
                     
                     v2 v = AppState->bezierCurves[cfm][f].ix[0].pt;
-                    
                     // put these in a loop
                     // the v stuff is whats wrong
                     pt[0].x = v.x+cosf(feta)*tsize;
@@ -2841,7 +2812,7 @@ bool ValueCheck(Application_State *AppState)
                             ix = V2((lineIntersect(pt[0], pt[1], v, nPt2)).x,
                                     (lineIntersect(pt[0], pt[1], v, nPt1)).x);
                             
-                            // well i can only have 2 cuts and they can absolutely take the same line, and whichever would cut deeper would take precedent, also it could take the top one, and we'd handle for that too, i dont really have to though, since we can just assume thats not the case for now its
+                            
                             if(ix.x < 1.0f && ix.x  > -1.0f )
                             {
                                 
@@ -2850,6 +2821,7 @@ bool ValueCheck(Application_State *AppState)
                                 alteredBez[aCt][1] = ix.x*tsize;
                                 alteredBez[aCt][2] = ix.y*tsize;
                             }
+                            
                             // not quite there but closer
                         }
                         
@@ -2888,17 +2860,15 @@ bool ValueCheck(Application_State *AppState)
                         // not sure why i have two 
                         ends= 1/5*(curvePoints*(int)(*numOfBezPts)) ;
                         float tgtSize = 5.0f;
-						
+						if(i <= tu*4/5)
+                            size = 3;
+                        else if(i > tu*4/5 && i < tu*5/6)
+                            size = 3;
+                        else
+                            size -= 3.0f/(tu*1/3);
                         // parently you dont get around the total length of the thing.. luckily i can calculate the the length and have the divs 
                         // so all we have to do is just guess let
-                        if(!isBeg){
-                            if(i < ends)
-                                size+=tsize/ends;
-                        }
-                        if(!isEnd){
-                            if(i > tu - ends)
-                                size-=tsize/ends;
-                        }
+                        
                         
                         v3 vc = V3(NAN,NAN,NAN);
                         if(!isnan(alteredBez[0][0]) && alteredBez[0][0] <= i)

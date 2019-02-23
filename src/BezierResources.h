@@ -1926,7 +1926,7 @@ namespace testCode {
                         // not sure what bez points are but shouldnt matter
                         inx->pt = br1.bezPts[0];
                         inx->crsAngle = crsAngle1;
-                        
+                        inx->isCutting = true;
                         
                         inx = &br2.bCurve->ix[br2.bCurve->ixCount];
                         static int iT = -1;
@@ -1943,6 +1943,8 @@ namespace testCode {
                         inx->b_i = iT;
                         inx->pt = br2.bezPts[0];
                         inx->crsAngle = crsAngle2;
+                        inx->isCutting = true;
+                        
                         
                         br1.bCurve->ixCount += 1;
                         br2.bCurve->ixCount += 1;

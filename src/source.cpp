@@ -273,7 +273,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR commandLine, int cmdShow
                 io.PenPressure =(float)io.MouseDown[0];
             }
             AppState->mousePos = io.MouseP;
-			AppState->PenPressure = 1.0f;// io.PenPressure;
+			AppState->PenPressure = io.PenPressure;
             if(AppState->PenPressure){
                 // i dont think i should put this here but i am dumb so you know
                 AppState->canFill = true;
