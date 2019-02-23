@@ -1688,7 +1688,7 @@ namespace testCode {
         // yeah figuring out the t of this badboy is gonna be a bitch... good luck friend
         return pointFromBez(t, bez->bezierPts, bez-> controlPts);
     }
-    // its entirely distance based
+    // DEPTRICATED APPARTENTLY I CHANGED THE ENTIRE STRUCTURE OF THE PROGRAM AND NOW IT MAKES SENSE WHY I KEPT THOSE BEZREFS, THOSE ARE MEANT TO STAY, THEY ACT AS HIT BOXES, THEY CAN BE REMADE REFERENCED OTHERWISE THEY ARE ADJUSTABLE AND NOT BOUND BY THINGS, ALSO I CAN GET A ROUGH DISTANCE OF THE DAMN THING
     v2 *binarySIntersection(bezRef *b1,bezRef *b2)
     {
         

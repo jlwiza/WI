@@ -2244,9 +2244,16 @@ bool ValueCheck(Application_State *AppState)
                                     
                                     
                                     
+                                    int crsAngle1;
+                                    int crsAngle2;
+                                    float an1;
+                                    float an2;
+                                    
+                                    
                                     // ok so this is the intersection
                                     unsigned int crsI;
                                     {
+                                        // TODO:: PULL THIS OUT INTO A FUNCTION IN REFACTORING
                                         int cfm = AppState->currFrame;
                                         unsigned int *iCnt = &AppState->bezierCurves[cfm][bi].ixCount;
                                         crsI = AppState->bezierCurves[cfm][bi].ixCount;
@@ -2256,11 +2263,16 @@ bool ValueCheck(Application_State *AppState)
                                         
                                         ix.bCurve = &AppState->bezierCurves[cfm][bi];
                                         // umm the b_i is a pointless thing now, it would be a pain in the ass to maintain and i dont think it serves any value
+                                        
                                         v2 delta = v.x*(boneHead[i].bezPts[1] - boneHead[i].bezPts[0]);
+                                        an1 = atan2f(boneHead[i].bezPts[1].y - boneHead[i].bezPts[0].y,boneHead[i].bezPts[1].x - boneHead[i].bezPts[0].x);
+                                        
                                         ix.pt = boneHead[i].bezPts[0] + delta;
                                         ix.t = boneHead[i].t1 + (boneHead[i].t2 - boneHead[i].t1)*v.x;
-                                        
                                         ix.b_t = *iCnt;
+                                        ix.isCutting = true;
+                                        
+                                        
                                         int i = 0;
                                         float oldT = -42.0f;
                                         if(*iCnt > 0)
@@ -2359,8 +2371,15 @@ bool ValueCheck(Application_State *AppState)
                                     ix.bCurve = &AppState->bezierCurves[cfm][end];
                                     // umm the b_i is a pointless thing now, it would be a pain in the ass to maintain and i dont think it serves any value
                                     v2 delta = v.y*(boneHead2[i2].bezPts[1] - boneHead2[i2].bezPts[0]);
+                                    an2 = atan2f(boneHead2[i2].bezPts[1].y - boneHead2[i2].bezPts[0].y,
+                                                 boneHead2[i2].bezPts[1].x - boneHead2[i2].bezPts[0].x);
                                     ix.pt = boneHead2[i2].bezPts[0] + delta;
                                     ix.t = boneHead2[i2].t1 + dt;
+                                    ix.isCutting = true;
+                                    ix.crsAngle = crsAngle2;
+                                    
+                                    
+                                    ix.crsAngle = int(an1 - an2);
                                     
                                     
                                     unsigned int crsI2 =*iCnt; 
@@ -2369,6 +2388,7 @@ bool ValueCheck(Application_State *AppState)
                                     AppState->bezierCurves[cfm][bi].ix[crsI].pair = &AppState->bezierCurves[cfm][end].ix[*iCnt-1];
                                     
                                     ix.pair = &AppState->bezierCurves[cfm][bi].ix[crsI];
+                                    ix.pair->crsAngle = int(an2 - an1);
                                     
                                     //TODO::Im going to have to come back to this later but for now I wanna stay so far away 
                                     
@@ -2700,6 +2720,7 @@ bool ValueCheck(Application_State *AppState)
                 
                 *tPts = 0;
                 AppState->bezierHandler = {};
+                
             }
             
             // TODO:: tell me if this is DUMB, because it smells like its dumb
@@ -2753,6 +2774,7 @@ bool ValueCheck(Application_State *AppState)
                 float tsize = 5.0f;
                 //TODO(JON): temporary for testing please delete
                 //AppState->bezierCurves[cfm][1].ix[0].isCutting = true;
+                
                 
                 v2 pt[4];
                 if(f != 0 && AppState->bezierCurves[cfm][f].ix[0].isCutting){
@@ -2860,7 +2882,7 @@ bool ValueCheck(Application_State *AppState)
                         // not sure why i have two 
                         ends= 1/5*(curvePoints*(int)(*numOfBezPts)) ;
                         float tgtSize = 5.0f;
-						if(i <= tu*4/5)
+                        if(i <= tu*4/5)
                             size = 3;
                         else if(i > tu*4/5 && i < tu*5/6)
                             size = 3;

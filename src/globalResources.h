@@ -250,6 +250,8 @@ struct bezRef
 };
 
 
+
+//TODO::Umm i was dumb before and completely forgot that i completely changed the structure of the program. I moved everything to be stored in these edgeboxes, which means I need to streamline the fuck out of this and make sure not to use it when I dont need, its kinda great because I can then get rid of boxes from memory or anything everyonce in a while, there may be some really clever shit, I may even also be able to get rid of the entirety of the bezier information at times
 struct EdgeBoxes
 {
     bezRef *edges;
