@@ -34,6 +34,7 @@ static void Fatal(const char *msg, ...)
 }
 
 // I'd have this seperated out but this is some weird openGl windows talking shit to get it started, oh and vsync
+// ok im gonna try some shit
 void windowsGL_init(winContext *context)
 {
     
@@ -49,8 +50,13 @@ void windowsGL_init(winContext *context)
 	pixelFrmat.cColorBits = 32;
 	pixelFrmat.cAlphaBits = 8;
 	pixelFrmat.iLayerType = PFD_MAIN_PLANE;
-	int suggestedPixelFrmatIndex = ChoosePixelFormat(windowDC, &pixelFrmat);
-	PIXELFORMATDESCRIPTOR suggestedPixelFrmat;
+	
+    
+    int suggestedPixelFrmatIndex = ChoosePixelFormat(windowDC, &pixelFrmat);
+	
+    
+    
+    PIXELFORMATDESCRIPTOR suggestedPixelFrmat;
 	DescribePixelFormat(windowDC, suggestedPixelFrmatIndex, sizeof(suggestedPixelFrmat), &suggestedPixelFrmat);
 	SetPixelFormat(windowDC, suggestedPixelFrmatIndex, &suggestedPixelFrmat);
     
@@ -81,12 +87,18 @@ void windowsGL_init(winContext *context)
 		}
 		
         
+        
+        
 	} else
 	{
 		//I dunno
 	}
 	ReleaseDC(window, windowDC);
 }
+
+
+
+
 //extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK WindowProc(HWND   hwnd, UINT   msg, WPARAM wParam, LPARAM lParam)

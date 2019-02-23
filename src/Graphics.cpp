@@ -203,9 +203,14 @@ void Graphics_update(float vBuffer[], unsigned int numberOfTriangles)
 	glGenBuffers(1, &buffer);
 	//
     
-    
-    
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    //I PUT SOME ALPHA STUFF DID NOT TEST
+    // it just works.. just like that.. weird.
+    glEnable(GL_ALPHA_TEST);
+	
+    glEnable(GL_BLEND);
+    glEnable(GL_MULTISAMPLE);
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, 3*vTimesI * numberOfTriangles * sizeof(float), vertices, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
 	glEnableVertexAttribArray(0);
