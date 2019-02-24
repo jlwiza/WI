@@ -835,12 +835,41 @@ v2 * splitBezref(bezRef bCurve, float t)
     v2 r[5] = { nBez, lBez, rBez,p1,p3 };
     return r;
 }
+
+
+
 bool boxCollisionBez(bezierCurve c1, bezierCurve c2)
 {
     if (c1.xl < c2.xh &&
         c1.xh > c2.xl &&
         c1.yl < c2.yh &&
         c1.yh> c2.yl)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+bool PointInBox(v2 c1, boxRef c2)
+{
+    if (c1.x < c2.xh &&
+        c1.x > c2.xl &&
+        c1.y < c2.yh &&
+        c1.y > c2.yl)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+bool PointInBox(v2 c1, bezierCurve c2)
+{
+    if (c1.x < c2.xh &&
+        c1.x > c2.xl &&
+        c1.y < c2.yh &&
+        c1.y> c2.yl)
     {
         return true;
     }

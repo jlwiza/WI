@@ -15,17 +15,6 @@ float fillqueY[200];
 //bezRef boneHead[20];
 //bezRef boneHead2[20];
 
-// I have made  a change
-namespace whoKnows
-{
-    bool isTrue = false;
-}
-
-namespace whoKnowss
-{
-    bezRef someMoreCrap = {};
-    
-}
 
 
 
@@ -1359,7 +1348,7 @@ bezRef *fmix = (bezRef *)calloc(7000,sizeof(bezRef));
 unsigned int fmixSize;
 
 // now the problem is im not sure that i can get the edgeBoxes, actually if its edgeBox centric, a lil weird but whatevs, so lets test it and see if it works
-void Fmixer(float btL, float btH,EdgeBoxes e,  Application_State *AppState)
+void Fmixer(float btL, float btH,EdgeBoxes e)
 {
     float swap = 0;
     if(btL > btH)
@@ -1376,6 +1365,7 @@ void Fmixer(float btL, float btH,EdgeBoxes e,  Application_State *AppState)
     {
         if (e.edges[i].t1 >= btL && e.edges[i].t2 <= btH)
         {
+            // where am i clearing this? i think on the fill cuz im queing up to fill.. god i hope im right
             fmix[fmixSize] = e.edges[i];
             fmixSize++;
         }
@@ -1436,6 +1426,8 @@ struct traversedIX
     __int8 dir = 0;
     // represents if Ive gone 0 for neither direction left right or both
     intersection *ix;
+    float t1;
+    float t2;
 };
 
 
@@ -1453,7 +1445,7 @@ bool checkIx(bezierCurve *bCurve, int  b_t)
 
 
 // TODO:: get rid of APPSTATE L1 diff Im gonna wanna return the array of shpaes or something 
-void shapeChecker(bezierCurve *bez, int b_t, traversedIX *tvd)
+bool shapeChecker(bezierCurve *bez, int b_t, traversedIX *tvd)
 {
     // im gonna leave this i probably wont need this but this is what it should look like
     //bezierCurve *b_next = &AppState->bezierCurves[AppState->currFrame][b];
@@ -1499,17 +1491,22 @@ void shapeChecker(bezierCurve *bez, int b_t, traversedIX *tvd)
                 if(checkIx(tvd[i].ix->bCurve, b_t -1))
                 {
                     
+                    
                     tvd[i].dir = 2;
+                    tvd[i].t1 =tvd[i].ix->t;
                     tvd[i+1].ix = &tvd[i].ix->bCurve->ix[b_t -1];
+                    tvd[i].t2 =tvd[i+1].ix->t;
+                    tvd[i].t2 =tvd[i+1].ix->t;
                     tvd[i+1].dir =1; 
                     tvd[i+2].ix = tvd[i+1].ix->pair;
                     i +=2;
                     
                 }
                 else if(checkIx(tvd[i].ix->bCurve, b_t +1)){
-                    
                     tvd[i].dir = 3;
+                    tvd[i].t1 =tvd[i].ix->t;
                     tvd[i+1].ix = &tvd[i].ix->bCurve->ix[b_t +1];
+                    tvd[i].t2 =tvd[i+1].ix->t;
                     tvd[i+1].dir =2; 
                     tvd[i+2].ix = tvd[i+1].ix->pair;
                     i +=2;
@@ -1535,6 +1532,8 @@ void shapeChecker(bezierCurve *bez, int b_t, traversedIX *tvd)
                     
                     tvd[i].dir = 3;
                     tvd[i+1].ix = &tvd[i].ix->bCurve->ix[b_t -1];
+                    tvd[i].t1 =tvd[i].ix->t;
+                    tvd[i].t2 =tvd[i+1].ix->t;
                     tvd[i+1].dir =1; 
                     tvd[i+2].ix = tvd[i+1].ix->pair;
                     i +=2;
@@ -1555,6 +1554,8 @@ void shapeChecker(bezierCurve *bez, int b_t, traversedIX *tvd)
                     
                     tvd[i].dir = 3;
                     tvd[i+1].ix = &tvd[i].ix->bCurve->ix[b_t +1];
+                    tvd[i].t1 =tvd[i].ix->t;
+                    tvd[i].t2 =tvd[i+1].ix->t;
                     tvd[i+1].dir =2; 
                     tvd[i+2].ix = tvd[i+1].ix->pair;
                     i +=2;
@@ -1583,29 +1584,40 @@ void shapeChecker(bezierCurve *bez, int b_t, traversedIX *tvd)
             
         }
         
-        if(tvd[i].ix == begIx && tvd[i].dir != 3){
-            
+        if(tvd[i].ix == begIx){
+            if(tvd[i].dir != 3){
+                
+                return true;
+            }else{
+                return false;
+                // this is failure but im not sure what I want to do for failure at this point... it just means there was no way for it to make it passed.. for real we'd might just wanna make sure it's begIx[0].dir == 3; otherwise we should check if we can go left.. though that may not be true
+                
+            }
             isFinished = true;
-        }else{
-            
-            // this is failure but im not sure what I want to do for failure at this point... it just means there was no way for it to make it passed.. for real we'd might just wanna make sure it's begIx[0].dir == 3; otherwise we should check if we can go left.. though that may not be true
-            
         }
     }
     
+    // I named the length i because it grew into what it ultimately becames so im sorry in advance for any confusion
+    // if im not mistaken the last one doesnt have a pair for obvious reasons
+    for(int t = 0; t < i-1; i++)
+    {
+        // i am wondering though is it better to pass it by reference? I dont know i think it may be better to pass with a pointer... oh well
+        Fmixer(tvd[i].t1,tvd[i].t2,*tvd[i].ix->bCurve->edges);
+    }
     
+    /*
+    // dont know what this is but its wrong
     while( b_next->ix[b_t+1].pair != orig)
     {
-        
+    
         //TODO:: this is dumb and wasteful but whatever, it goes through every intersection to find the next highest, itll probably just work out since its filling but its so fucking dumb
         b_next = b_next->ix[b_t+1].pair->bCurve;
         // b_t is the of the i'th intersection
         b_t =  b_next->ix[b_t].b_t;
         
         EdgeBoxes b2 =*b_next->edges;
-        //Fmixer(b_next->ix[b_t].t, b_next->ix[b_t+1].t,b2, AppState);
         
-    }
+    }*/
     
 }
 
@@ -1660,25 +1672,25 @@ bool ValueCheck(Application_State *AppState)
             static bool wasDown = false;
             
             // if i have a block of buttons dont be dumb just consolidate, but honestly thatd never be a performance bottleneck so forget i even said anything
+            boxRef buttons[2];
+            int buttonLength = 2;
+            buttons[0].xl = 0.0f;
+            buttons[0].xh = 100.0f;
+            buttons[0].yl = 0.0f;
+            buttons[0].yh = 100.0f;
+            
+            buttons[TWEENBUTTON].xl = 0.0f;
+            buttons[TWEENBUTTON].xh = 100.0f;
+            buttons[TWEENBUTTON].yl = 500.0f;
+            buttons[TWEENBUTTON].yh = 600.0f;
+            
             bool isAnglePositive;
             if(AppState->PenPressure > 0 )
             {
-                boxRef buttons[2];
-                int buttonLength = 1;
-                buttons[0].xl = 0.0f;
-                buttons[0].xh = 100.0f;
-                buttons[0].yl = 0.0f;
-                buttons[0].yh = 100.0f;
-                
-                buttons[TWEENBUTTON].xl = 0.0f;
-                buttons[TWEENBUTTON].yl = 0.0f;
-                buttons[TWEENBUTTON].xh = 100.0f;
-                buttons[TWEENBUTTON].yh = 100.0f;
                 
                 for(int i = 0; i < buttonLength; i++){
                     
-                    if(buttons[i].xl < AppState->mousePos.x && buttons[i].xh > AppState->mousePos.x &&
-                       buttons[i].yl < AppState->mousePos.y && buttons[i].yh > AppState->mousePos.y){
+                    if(PointInBox(AppState->mousePos, buttons[i])){
                         wasDown = true;
                         // this return is just so it doesnt draw in here, I can assert a draw bounds in the thing later
                         return true;
@@ -1693,39 +1705,64 @@ bool ValueCheck(Application_State *AppState)
                 
                 // need to change the hit test but uh yeah 
                 //if(HitTest(buttons[0], AppState->mousePos.x))
-                if(AppState->mousePos.x < 100 && AppState->mousePos.y < 100){
-                    
-                    static bool swtch = false;
-                    if(!swtch){
-                        //this currFrame business needs to be refactored and cleaned up
-                        AppState->currFrame += 1;
-                    }else{
-                        //dumb shit make sure to delete this
-                        //
-                        static bool played = false;
-                        
-                        if(!played){
-                            int frme1[2] = {1,0};
-                            int frme2[2] = {AppState->currFrame,0};
-                            
-                            bezierTween(AppState->bezierCurves,AppState->frames, AppState->twnframeCurves, frme1, frme2);
-                            
-                            played = true;
-                        }
-                        AppState->currFrame -= 1;
-                    }
-                    
-                    if(AppState->currFrame > 3)
+                for(int i = 0;i < buttonLength;i++)
+                {
+                    if(PointInBox(AppState->mousePos, buttons[i]))
                     {
-                        swtch = true;
+                        
+                        switch(i)
+                        {
+                            case 0:
+                            {
+                                if(AppState->mode == Drawing)
+                                    AppState->mode = Filling;
+                                else if(AppState->mode == Filling)
+                                    AppState->mode = Drawing;
+                                
+                                break;
+                            }
+                            case 1:
+                            {
+                                
+                                static bool swtch = false;
+                                if(!swtch){
+                                    //this currFrame business needs to be refactored and cleaned up
+                                    AppState->currFrame += 1;
+                                }else{
+                                    //dumb shit make sure to delete this
+                                    //
+                                    static bool played = false;
+                                    
+                                    if(!played){
+                                        int frme1[2] = {1,0};
+                                        int frme2[2] = {AppState->currFrame,0};
+                                        
+                                        bezierTween(AppState->bezierCurves,AppState->frames, AppState->twnframeCurves, frme1, frme2);
+                                        
+                                        played = true;
+                                    }
+                                    AppState->currFrame -= 1;
+                                }
+                                
+                                if(AppState->currFrame > 3)
+                                {
+                                    swtch = true;
+                                    
+                                }
+                                
+                                break;
+                                
+                            }
+                            
+                            default:
+                            {
+                                
+                            }
+                        }
                         
                     }
-                    //if(AppState->mode == Drawing)
-                    //AppState->mode = Filling;
-                    //else if(AppState->mode == Filling)
-                    //AppState->mode = Drawing;
-                    
                 }
+                
                 
                 
                 
@@ -1779,7 +1816,7 @@ bool ValueCheck(Application_State *AppState)
                 
                 int b_t = 0;
                 
-                Fmixer(b_next->ix[b_t].t, b_next->ix[b_t+1].t,b1, AppState);
+                //Fmixer(b_next->ix[b_t].t, b_next->ix[b_t+1].t,b1);
                 
                 intersection *orig = &b_next->ix[b_t];
                 
@@ -1797,27 +1834,18 @@ bool ValueCheck(Application_State *AppState)
                 
                 traversedIX tvd[50];
                 
-                shapeChecker(bez,  b_t,  tvd);
-                
-                
-                while(b_next->ix[b_t+1].pair != orig)
-                {
-                    
-                    //TODO:: this is dumb and wasteful but whatever, it goes through every intersection to find the next highest, itll probably jus work out since its filling but its so fucking dumb
-                    b_next = b_next->ix[b_t+1].pair->bCurve;
-                    
-                    // b_t is the of the i'th intersection
-                    b_t =  b_next->ix[b_t].b_t;
+                if(shapeChecker(bez,  b_t,  tvd)){
                     
                     
+                    convienceFillFunction(AppState);
                     
-                    EdgeBoxes b2 =*b_next->edges;
-                    Fmixer(b_next->ix[b_t].t, b_next->ix[b_t+1].t,b2, AppState);
+                }else{
+                    
+                    // do nothing i think
                     
                 }
                 
                 
-                convienceFillFunction(AppState);
                 
                 wasDown = false;
                 AppState->mode =Drawing;

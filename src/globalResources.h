@@ -378,8 +378,6 @@ struct Application_State
 	__int16 selection[50][2];
     __int16 selectionCnt;
     bezRef shapeBoxHandler[50][200];
-	//bezRef shapeBoxHandler2[500];
-	//bezRef shapeBoxHandler3[500];
 	EdgeBoxes EdgeBoxes[50];
     unsigned int numOfEdgeBoxes;
     // im just 
