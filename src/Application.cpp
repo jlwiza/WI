@@ -2294,9 +2294,10 @@ bool ValueCheck(Application_State *AppState)
                                         
                                         v2 delta = v.x*(boneHead[i].bezPts[1] - boneHead[i].bezPts[0]);
                                         an1 = atan2f(boneHead[i].bezPts[1].y - boneHead[i].bezPts[0].y,boneHead[i].bezPts[1].x - boneHead[i].bezPts[0].x);
-                                        
                                         ix.pt = boneHead[i].bezPts[0] + delta;
                                         ix.t = boneHead[i].t1 + (boneHead[i].t2 - boneHead[i].t1)*v.x;
+                                        ix.dt = v.x;
+                                        ix.b_i = boneHead[i].b_i;
                                         ix.b_t = *iCnt;
                                         ix.isCutting = true;
                                         
@@ -2401,6 +2402,8 @@ bool ValueCheck(Application_State *AppState)
                                     v2 delta = v.y*(boneHead2[i2].bezPts[1] - boneHead2[i2].bezPts[0]);
                                     an2 = atan2f(boneHead2[i2].bezPts[1].y - boneHead2[i2].bezPts[0].y,
                                                  boneHead2[i2].bezPts[1].x - boneHead2[i2].bezPts[0].x);
+                                    ix.dt = v.y;
+                                    ix.b_i = boneHead[i].b_i;
                                     ix.pt = boneHead2[i2].bezPts[0] + delta;
                                     ix.t = boneHead2[i2].t1 + dt;
                                     ix.isCutting = true;
@@ -2803,20 +2806,26 @@ bool ValueCheck(Application_State *AppState)
                 //TODO(JON): temporary for testing please delete
                 //AppState->bezierCurves[cfm][1].ix[0].isCutting = true;
                 
-                
+                int stopT =0;
+                float _dt;
                 v2 pt[4];
-                if(f != 0 && AppState->bezierCurves[cfm][f].ix[0].isCutting){
+                if(AppState->bezierCurves[cfm][1].ix[0].isCutting){
+                    
                     tsize = 8.0f;
                     
+                    stopT = AppState->bezierCurves[cfm][f].ix[0].b_i;
+                    _dt = AppState->bezierCurves[cfm][f].ix[0].dt;
                     
                     v2 v = AppState->bezierCurves[cfm][f].ix[0].pt;
                     // put these in a loop
                     // the v stuff is whats wrong
+                    
+                    /*
                     pt[0].x = v.x+cosf(feta)*tsize;
                     pt[0].y = v.y+sinf(feta)*tsize;
                     pt[1].x = v.x+cosf(feta)*(-tsize);
                     pt[1].y = v.y+sinf(feta)*(-tsize);
-                    
+                    */
                     
                     
                 }
@@ -2828,67 +2837,61 @@ bool ValueCheck(Application_State *AppState)
                 alteredBez[0][0] = NAN;
                 for (size_t i = 0; i < (size_t)*numOfBezPts - 1; i++)
                 {
-                    
-                    ii = i * 2;
-                    for (u = 0; u <= 1; u += _step)
-                    {
-                        v2 v = {};
-                        tu++;
-                        v.x = (1.0f - u) * (1.0f - u) * (1.0f - u) * bezierPts[i].x + 3.0f * (1.0f - u) * (1.0f - u) * u * controlPts[ii].x + 3.0f * (1.0f - u) * u * u * controlPts[ii + 1].x + (u * u * u) * bezierPts[i + 1].x;
-                        v.y = (1.0f - u) * (1.0f - u) * (1.0f - u) * bezierPts[i].y + 3.0f * (1.0f - u) * (1.0f - u) * u * controlPts[ii].y + 3.0f * (1.0f - u) * u * u * controlPts[ii + 1].y + (u * u * u) * bezierPts[i + 1].y;
-                        
-                        //ill wanna use my own transformation thingy or i could just get it from the point method i made i dunno yet
-                        
-                        //lo
-                        // what do we have to do now well we have to actually get the coloring working because that failed miserably
-                        
-                        // this calculates the normal which should ultimately be checked against every possible point 
-                        
-                        v2 dt = V2(v.x, v.y) - curve[tu-1];
-                        
-                        //TODO(): KILL tempsize;
-                        float a = atan2f(dt.x,dt.y);
-                        v2 nPt1; 
-                        v2 nPt2;
-                        nPt1.x = v.x+cos(a)*tsize;
-                        nPt1.y = v.y+sin(a)*tsize;
-                        nPt2.x = v.x+cos(a)*(-tsize);
-                        nPt2.y = v.y+sin(a)*(-tsize);
-                        v2 ix;
-                        int lchecks = 1;
-                        // i would check through the ix's pts which i would put in the thing, which remember you can shorten this but keep that for later
-                        // will be AppState->bezierCurves[cfm][f].ix[i] dirived from points
-                        for(int j = 0; j < lchecks; j++){
-                            ix = V2((lineIntersect(pt[0], pt[1], v, nPt2)).x,
-                                    (lineIntersect(pt[0], pt[1], v, nPt1)).x);
+                    if(!stopT || i < stopT){
+                        ii = i * 2;
+                        for (u = 0; u <= 1; u += _step)
+                        {
+                            v2 v = {};
+                            tu++;
+                            v.x = (1.0f - u) * (1.0f - u) * (1.0f - u) * bezierPts[i].x + 3.0f * (1.0f - u) * (1.0f - u) * u * controlPts[ii].x + 3.0f * (1.0f - u) * u * u * controlPts[ii + 1].x + (u * u * u) * bezierPts[i + 1].x;
+                            v.y = (1.0f - u) * (1.0f - u) * (1.0f - u) * bezierPts[i].y + 3.0f * (1.0f - u) * (1.0f - u) * u * controlPts[ii].y + 3.0f * (1.0f - u) * u * u * controlPts[ii + 1].y + (u * u * u) * bezierPts[i + 1].y;
                             
+                            //ill wanna use my own transformation thingy or i could just get it from the point method i made i dunno yet
                             
-                            if(ix.x < 1.0f && ix.x  > -1.0f )
-                            {
+                            //lo
+                            // what do we have to do now well we have to actually get the coloring working because that failed miserably
+                            
+                            // this calculates the normal which should ultimately be checked against every possible point 
+                            
+                            v2 dt = V2(v.x, v.y) - curve[tu-1];
+                            
+                            //TODO(): KILL tempsize;
+                            float a = atan2f(dt.x,dt.y);
+                            v2 nPt1; 
+                            v2 nPt2;
+                            nPt1.x = v.x+cos(a)*tsize;
+                            nPt1.y = v.y+sin(a)*tsize;
+                            nPt2.x = v.x+cos(a)*(-tsize);
+                            nPt2.y = v.y+sin(a)*(-tsize);
+                            v2 ix;
+                            int lchecks = 1;
+                            // i would check through the ix's pts which i would put in the thing, which remember you can shorten this but keep that for later
+                            // will be AppState->bezierCurves[cfm][f].ix[i] dirived from points
+                            for(int j = 0; j < lchecks; j++){
+                                ix = V2((lineIntersect(pt[0], pt[1], v, nPt2)).x,
+                                        (lineIntersect(pt[0], pt[1], v, nPt1)).x);
                                 
-                                aCt+=1;
-                                alteredBez[aCt][0] = tu;
-                                alteredBez[aCt][1] = ix.x*tsize;
-                                alteredBez[aCt][2] = ix.y*tsize;
+                                
+                                if(ix.x < 1.0f && ix.x  > -1.0f )
+                                {
+                                    
+                                    aCt+=1;
+                                    alteredBez[aCt][0] = tu;
+                                    alteredBez[aCt][1] = ix.x*tsize;
+                                    alteredBez[aCt][2] = ix.y*tsize;
+                                }
+                                
+                                // not quite there but closer
                             }
                             
-                            // not quite there but closer
+                            curve[tu] = V2(v.x, v.y);
+                            
+                            v4 clor = {256.0f, 256.0f, 0.0f};
+                            
+                            drawLine(bezierPts[i], controlPts[ii], 2.0f, clor, AppState);
+                            
+                            drawLine(bezierPts[i + 1], controlPts[ii + 1], 2.0f, clor, AppState);
                         }
-                        
-                        //if(bi == i){
-                        // and isBroken check
-                        //if(ixT >= u && ixT <= (u+_step))
-                        //{
-                        //}
-                        //}
-                        // this is what gets fed to the line creator thing?? so if there is a problem itlll show up here
-                        curve[tu] = V2(v.x, v.y);
-                        
-                        v4 clor = {256.0f, 256.0f, 0.0f};
-                        
-                        drawLine(bezierPts[i], controlPts[ii], 2.0f, clor, AppState);
-                        
-                        drawLine(bezierPts[i + 1], controlPts[ii + 1], 2.0f, clor, AppState);
                     }
                     
                     // it would be how many tu's we have times, how many curves*beziers
@@ -2897,7 +2900,7 @@ bool ValueCheck(Application_State *AppState)
                     // dont do it 
                     float size = 0;
                     int ends = 12;
-                    // it should be something liek ix.i somhing * the divisions curvepoints then inx.pt is the point that you actually kill it.. seriously though past jon, phenominal you really made this easier for me, and just do the other angle minus your angle to get the relative angle of the slice... whhiich you check every preceding l/right and normal lines for an intersection, and wait till you get one, all the relative angle tells you is what direction you should start searching.
+                    
                     unsigned int stoptest = 50;
                     int min = 0;
                     // we have to create the fantom intereptpoint
@@ -2916,9 +2919,10 @@ bool ValueCheck(Application_State *AppState)
                             size = 3;
                         else
                             size -= 3.0f/(tu*1/3);
+                        size = tgtSize;
                         // parently you dont get around the total length of the thing.. luckily i can calculate the the length and have the divs 
                         // so all we have to do is just guess let
-                        
+                        // why did i seperate this out
                         
                         v3 vc = V3(NAN,NAN,NAN);
                         if(!isnan(alteredBez[0][0]) && alteredBez[0][0] <= i)

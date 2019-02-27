@@ -1208,6 +1208,7 @@ void splitBezier(bezierCurve *bz, int splits, bezRef *bref1)
 // so now that we've moved this whats next oh I wanna make beziers based on
 // i think i can do it in three minutes  lets give it to 1:16 i shaved it to 4 but well fuck anyway moving on 
 // im just thinking putting the t in here and just running it, pff I dont know anything else should take like a minute if that 
+// I think this only works for line to line... which is sadly annoying, but i think the other one, which i know works didnt do that, but i think it just automatically split it, I could have a function outside the damn thing to do it, but yeah this is fine for now
 void newsplitBezier(bezierCurve *bz, unsigned int *splits, bezRef *bref1)
 {
     
@@ -1224,6 +1225,8 @@ void newsplitBezier(bezierCurve *bz, unsigned int *splits, bezRef *bref1)
         b1.bezPts[1] = bz->bezierPts[i+1];
         b1.cntrlPts[0] = bz->controlPts[i*2];
         b1.cntrlPts[1] = bz->controlPts[i*2+1];
+        // i think it equals I think
+        b1.b_i = i;
         
         if (b1.bezPts[0].x < b1.bezPts[1].x)
         { b1.xl = b1.bezPts[0].x; b1.xh = b1.bezPts[1].x;}

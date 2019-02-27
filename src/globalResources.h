@@ -174,13 +174,17 @@ struct intersection
     // im not sure if im ever gonna need the b_i or t at this point.. yeah for kutting, then again if need be i can cut from scratch, since cutting is suh a rare 
     // TODO:: OPTIMIZE PRIME
     // b_i is the the bpoint
-    __int8 b_i;
+    int b_i;
     bool isCutting;
+    // this is the intersection count
     int b_t;
     int crsAngle;
     
-    // t is the exact value 
+    // t is the exact value as in if the entirety of the bezier was to one
+    // just investigate if i can get t to equal the totall number of beziers and then the dt, itd just be that much easier to deal with but yeah
     float t;
+    //TODO:: get rid of this i just dont want to do the math twice but i really should cuz this can get out of control really quick
+    float dt;
     v2 pt;
     intersection *pair;
     
@@ -247,6 +251,7 @@ struct bezRef
 	v2 cntrlPts[2];
 	// we use this original bezRefI to find out how far along we are in it
 	int b_i;
+    
 };
 
 
