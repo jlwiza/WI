@@ -841,6 +841,28 @@ void reverseBezRefList(bezRef *list, int length)
     }
 }
 
+// i could call the other one but... why waste a function call am I right
+int NumOfShapeBoxesonCurFrame(Application_State *Astate)
+{
+    int count = 0;
+    int cfm = Astate->currFrame;
+    for(int i = 0; i < Astate->frames[cfm]; i++)
+    {
+        count +=Astate->bezierCurves[cfm][i].edges->size;
+    }
+    return count;
+}
+
+
+int NumOfShapeBoxesOnFrame(Application_State *Astate, int cfm)
+{
+    int count = 0;
+    for(int i = 0; i < Astate->frames[cfm]; i++)
+    {
+        count +=Astate->bezierCurves[cfm][i].edges->size;
+    }
+    return count;
+}
 void sortBezrefBoxes(bezRef *c2, unsigned int n)
 {
     // Im pretty sure they retainted their  t1 and t2 so we can sort them on their t's
@@ -1164,36 +1186,42 @@ void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBox
     // oh this just checks if im filling outside a shape, so it just stops.. i dont know how enforceable this is, ill just say if it hits a corner pi
     
     // TODO::this is dumb and I should put count in someplace but I am feeling tired and dumb
-    static int count = 0;
-    if (count < 0 && oldcolor.x != 0)
-        return;
     
-    oldcolor.x = 1.0f;
-    if (count == 0)
+    // its debu code in this curley braces it just shows the boxes that i have
     {
-        AppState->paintCrap[0] = {};
-        static bool isdone = false;
+        static int count = 0;
+        if (count < 0 && oldcolor.x != 0)
+            return;
         
-        if (!isdone)
+        oldcolor.x = 1.0f;
+        if (count == 0)
         {
-            bezRef *boxes;// = AppState->shapeBoxHandler;
+            AppState->paintCrap[0] = {};
+            static bool isdone = false;
             
-            for (unsigned int i = 0; i < *shpeBoxes; i++)
+            if (!isdone)
             {
+                bezRef *boxes;// = AppState->shapeBoxHandler;
                 
-                v4 weirdColor = {0.5f, i / 4.0f, i / 4.0f, 1.0f};
-                
-                float boxsize = boxes[i].xh - boxes[i].xl;
-                float yboxsize = boxes[i].yh - boxes[i].yl;
-                float t = boxes[i].xl + boxsize / 2;
-                float d = boxes[i].yl + yboxsize / 2;
-                paintRectangle(t, d, boxsize, weirdColor, AppState, yboxsize);
-                // not sure why this is here i thought this.. i dunno really doesnt matter i dont think
-                tempShapeBoxesOutline = *shpeBoxes;
+                for (unsigned int i = 0; i < *shpeBoxes; i++)
+                {
+                    
+                    v4 weirdColor = {0.5f, i / 4.0f, i / 4.0f, 1.0f};
+                    
+                    float boxsize = boxes[i].xh - boxes[i].xl;
+                    float yboxsize = boxes[i].yh - boxes[i].yl;
+                    float t = boxes[i].xl + boxsize / 2;
+                    float d = boxes[i].yl + yboxsize / 2;
+                    paintRectangle(t, d, boxsize, weirdColor, AppState, yboxsize);
+                    // not sure why this is here i thought this.. i dunno really doesnt matter i dont think
+                    tempShapeBoxesOutline = *shpeBoxes;
+                }
+                isdone = true;
             }
-            isdone = true;
         }
+        
     }
+    
     float bwdth = AppState->boxsize;
     bezRef box = {x - bwdth / 2, x + bwdth / 2, y - bwdth / 2, y + bwdth / 2};
     
@@ -1206,7 +1234,6 @@ void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBox
         count++;
         if (count > 1600)
         {
-            
             AppState->paintCrap[0] = x;
             AppState->paintCrap[1] = y;
             AppState->paintCrap[2] = newcolor.x;
@@ -1221,6 +1248,7 @@ void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBox
             
         }
         
+        // this may be my bottleneck there is no point in doing in then painting then doing it then painting, get the shapeboxes distill them into 
         paintRectangle(x, y, bwdth, newcolor, AppState);
         //AppState->shapeBoxHandler[*shpeBoxes] = box;
         *shpeBoxes += 1;
@@ -1779,8 +1807,13 @@ bool ValueCheck(Application_State *AppState)
                 
                 
                 v4 clor;
-                
+                AppState->numOfBoxHndler =  NumOfShapeBoxesonCurFrame();
                 floodFill(AppState->mousePos.x, AppState->mousePos.y, v4{}, clor, &AppState->numOfBoxHndler, AppState);
+                
+                
+                
+                
+                
                 
 #if 0
                 //TODO:: CHECKPOINT

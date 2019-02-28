@@ -353,20 +353,22 @@ struct Application_State
 {
     
     //  C++ is funny it partially implements features, like you can initialize a variable in a struct, but not if you pull it from the heap... but only if its on the stack.. which makes it next to useless.. its like thanks for the almost convienence 
-    int currFrame = 1;
+    bool GfxNeedsUpdate = true;
+	bool canFill = true;
+	int currFrame = 1;
     unsigned int maxbezPerFrame = 0;
-    // a better name would have been bezes in frame or something
+    // this may start getting a little complicated when im ordering tweens, a lot of duplicate space, not necessarilly data but yeah, since they have to be ordered in such a way, yknow if i just name them all with a key property id know to look at the previous frame as a key, just keep in mind idea for two per key, remember its not a drawing app its an animation app so having that info is crucial and should be apparent, doing tricks to save space off the bat like this will only probably hurt you mmmk?
+    // a better name would have numof bezes in frame or something
     unsigned int frames[3000];
 	__int32 BaseHeapAddress;
-	bool canFill = true;
-	bool GfxNeedsUpdate = true;
 	unsigned int numOfLines;
 	unsigned int vertCount;
 	unsigned int tvertCount;
 	unsigned int colorCount;
 	unsigned int lineQue;
 	unsigned int numOftempPoints;
-	unsigned int numOfBeziers;
+	// this is replace 
+    unsigned int numOfBeziers;
     float posAnglecnt;
 	int twnframeCurves[50];
     // which beziers were last selected on the frame, we can change it to layer that can be either a shape or a bezier later
@@ -382,26 +384,27 @@ struct Application_State
 	//lines lines[15];
 	__int16 selection[50][2];
     __int16 selectionCnt;
-    bezRef shapeBoxHandler[50][200];
-	EdgeBoxes EdgeBoxes[50];
+    // it seems i can only have what 200 boxes per frame?
+    EdgeBoxes EdgeBoxes[50];
     unsigned int numOfEdgeBoxes;
     // im just 
     
     // TODO::vertex buffer will be the permanent one, very little is temporary in the drawing of the thing, its gonna take some rewriting to get that right though
     // DONT KNOW WHY THIS IS DONT CARE KILL ONE OF THESE
+    bezRef shapeBoxHandler[50][200];
+	bezierCurve bezierCurves[MAXFRMS][MAXBEZ];
     float vertexBuffer[6000000];
-	// right now tVertex buffer acts as the permanent one but that will change
 	float tvertexBuffer[6000000];
+	shape AppShapes[90000];
+    // right now tVertex buffer acts as the permanent one but that will change
 	float paintCrap[7];
 	//float colorBuffer[200000];
 	// honestly this is really the only data that remains
-	shape AppShapes[90000];
-    // 40 represents the number of 
+	// 40 represents the number of 
     
     // just so we can select up to 50 different bez's we can get more though
     // I wanted to do a pointer but it gets kinda expensive and they'll never be that many selections tons more than 50 
-	bezierCurve bezierCurves[MAXFRMS][MAXBEZ];
-    
+	
 	bHelper bezierHandler;
 };
 
