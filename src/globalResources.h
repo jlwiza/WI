@@ -366,6 +366,7 @@ struct Application_State
 	unsigned int tvertCount;
 	unsigned int colorCount;
 	unsigned int lineQue;
+	unsigned int numOfBoxHndler;
 	unsigned int numOftempPoints;
 	// this is replace 
     unsigned int numOfBeziers;
@@ -380,7 +381,6 @@ struct Application_State
 	float PenPressure;
 	float PenMoveAngle;
 	float bezDiv;
-	unsigned int numOfBoxHndler;
 	//lines lines[15];
 	__int16 selection[50][2];
     __int16 selectionCnt;

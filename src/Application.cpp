@@ -1187,9 +1187,9 @@ void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBox
     
     // TODO::this is dumb and I should put count in someplace but I am feeling tired and dumb
     
+    static int count = 0;
     // its debu code in this curley braces it just shows the boxes that i have
     {
-        static int count = 0;
         if (count < 0 && oldcolor.x != 0)
             return;
         
@@ -1806,11 +1806,14 @@ bool ValueCheck(Application_State *AppState)
                 
                 
                 
-                v4 clor;
-                AppState->numOfBoxHndler =  NumOfShapeBoxesonCurFrame();
-                floodFill(AppState->mousePos.x, AppState->mousePos.y, v4{}, clor, &AppState->numOfBoxHndler, AppState);
+                static bool clicked = false;
                 
-                
+                if(clicked){
+                    v4 clor;
+                    AppState->numOfBoxHndler =  NumOfShapeBoxesonCurFrame(AppState);
+                    floodFill(AppState->mousePos.x, AppState->mousePos.y, v4{}, clor, &AppState->numOfBoxHndler, AppState);
+                    clicked = true;
+                }
                 
                 
                 
