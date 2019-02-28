@@ -1161,6 +1161,7 @@ void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBox
     {
         AppState->canFill = false;
     }
+    // oh this just checks if im filling outside a shape, so it just stops.. i dont know how enforceable this is, ill just say if it hits a corner pi
     
     // TODO::this is dumb and I should put count in someplace but I am feeling tired and dumb
     static int count = 0;
@@ -1198,9 +1199,9 @@ void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBox
     
     //TODO:: its likely to not move a pixel when create a bezier point so it would be wise not to use this for its creation, instead use a fixed amount, that way i can also regulate the size of the triangles to some extent, its fine for beginning testing get the point accross type shit though
     glbDim.yh = 600.0f;
-    
-    //if (!boxCollisions(box, AppState->shapeBoxHandler, *shpeBoxes) && y - bwdth / 2 > glbDim.yl && x - bwdth / 2 > glbDim.xl && x + bwdth / 2 < glbDim.xh && y + bwdth / 2 < glbDim.yh)
-    if(false){
+    int frm = AppState->currFrame;
+    if (!boxCollisions(box, AppState->shapeBoxHandler[frm], *shpeBoxes) && y - bwdth / 2 > glbDim.yl && x - bwdth / 2 > glbDim.xl && x + bwdth / 2 < glbDim.xh && y + bwdth / 2 < glbDim.yh)
+    {
         
         count++;
         if (count > 1600)
@@ -1233,7 +1234,7 @@ void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBox
     {
         // check if flush combine the two but anyway for now its fine
         static int newerBetterMostDefinitelyTemporaryCounter = 0;
-        //if (boxCollisions(box, AppState->shapeBoxHandler, tempShapeBoxesOutline) && y - bwdth / 2 > glbDim.yl && x - bwdth / 2 > glbDim.xl && x + bwdth / 2 < glbDim.xh && y + bwdth / 2 < glbDim.yh && newerBetterMostDefinitelyTemporaryCounter < 100)
+        if (boxCollisions(box,*AppState->shapeBoxHandler, tempShapeBoxesOutline) && y - bwdth / 2 > glbDim.yl && x - bwdth / 2 > glbDim.xl && x + bwdth / 2 < glbDim.xh && y + bwdth / 2 < glbDim.yh && newerBetterMostDefinitelyTemporaryCounter < 100)
         {
             newerBetterMostDefinitelyTemporaryCounter++;
             
@@ -1774,10 +1775,14 @@ bool ValueCheck(Application_State *AppState)
             
             
             else if(AppState->mode == Filling && AppState->PenPressure > 0){
-                // we definitely gonna move this to a function but for now its fine
                 
-                //were gonna assume that there are 2 for every bezier and they are ordered like that as well, i dont think it is though and youll need to adress that.. wow i see why you want to optimize while your going a long because i see the path to optimization and its a doozey but honestly all this code didnt take that long to write for now all that matters is that they are paired up
                 
+                
+                v4 clor;
+                
+                floodFill(AppState->mousePos.x, AppState->mousePos.y, v4{}, clor, &AppState->numOfBoxHndler, AppState);
+                
+#if 0
                 //TODO:: CHECKPOINT
                 //ok we just do the intersept inbetween double jumping and saving the intercept if the intersept is the lowest intersept it wins
                 int ix;
@@ -1853,17 +1858,7 @@ bool ValueCheck(Application_State *AppState)
                 
                 
                 // god I love reading the past notes to myself
-                
-                // oh wow, this is interesting it makes the assumption that I only need to find any random one, because as soon as i find one,  should be able to go around, to its next intersection to make a completed shape if that thing works, which means I will be spending a lot of time tweaking the hell out of this shit, I may not even get this done tonight because I have a lot of self loathing... no i dont I dont know why i said that, maybe its because self loathing is hip, oh jon, you trying to be like the cool kids... yknow disagreeing with yourself like that is what eventually might lead to self loathing.... yeeesss.
-                
-                
-                // okay were just gonna rewrite this, just because its actually pretty simple, we just make some really simple assumptions and then were gonna go from there 
-                // ASS #1 every bezier only has two intersections
-                //  ASS #2 they go in the same direction, so we'll just add em into the fmix and I think ill just be on my way, real quick simple dirty first test, its stupid but its really big
-                
-                // you might wanna order these in a clockwise, and ofcourse its radial around a given center point what have you 
-                
-                //Again this only works with perfectly behaved bez's but uh yeah, rock on 
+#endif
                 
                 
                 
@@ -2299,7 +2294,7 @@ bool ValueCheck(Application_State *AppState)
                                         ix.dt = v.x;
                                         ix.b_i = boneHead[i].b_i;
                                         ix.b_t = *iCnt;
-                                        ix.isCutting = true;
+                                        //ix.isCutting = true;
                                         
                                         
                                         int i = 0;
@@ -2406,7 +2401,7 @@ bool ValueCheck(Application_State *AppState)
                                     ix.b_i = boneHead[i].b_i;
                                     ix.pt = boneHead2[i2].bezPts[0] + delta;
                                     ix.t = boneHead2[i2].t1 + dt;
-                                    ix.isCutting = true;
+                                    //ix.isCutting = true;
                                     ix.crsAngle = crsAngle2;
                                     
                                     
@@ -2807,9 +2802,9 @@ bool ValueCheck(Application_State *AppState)
                 //AppState->bezierCurves[cfm][1].ix[0].isCutting = true;
                 
                 int stopT =0;
-                float _dt;
+                float _dt  = 1;
                 v2 pt[4];
-                if(AppState->bezierCurves[cfm][1].ix[0].isCutting){
+                if(AppState->bezierCurves[cfm][f].ix[0].isCutting){
                     
                     tsize = 8.0f;
                     
@@ -2837,9 +2832,9 @@ bool ValueCheck(Application_State *AppState)
                 alteredBez[0][0] = NAN;
                 for (size_t i = 0; i < (size_t)*numOfBezPts - 1; i++)
                 {
-                    if(!stopT || i < stopT){
+                    if(!stopT || i <= stopT){
                         ii = i * 2;
-                        for (u = 0; u <= 1; u += _step)
+                        for (u = 0; u <= _dt; u += _step)
                         {
                             v2 v = {};
                             tu++;
@@ -2882,15 +2877,15 @@ bool ValueCheck(Application_State *AppState)
                                 }
                                 
                                 // not quite there but closer
+                                
+                                curve[tu] = V2(v.x, v.y);
+                                
+                                v4 clor = {256.0f, 256.0f, 0.0f};
+                                
+                                drawLine(bezierPts[i], controlPts[ii], 2.0f, clor, AppState);
+                                
+                                drawLine(bezierPts[i + 1], controlPts[ii + 1], 2.0f, clor, AppState);
                             }
-                            
-                            curve[tu] = V2(v.x, v.y);
-                            
-                            v4 clor = {256.0f, 256.0f, 0.0f};
-                            
-                            drawLine(bezierPts[i], controlPts[ii], 2.0f, clor, AppState);
-                            
-                            drawLine(bezierPts[i + 1], controlPts[ii + 1], 2.0f, clor, AppState);
                         }
                     }
                     
