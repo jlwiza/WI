@@ -359,6 +359,7 @@ struct Application_State
     unsigned int maxbezPerFrame = 0;
     // this may start getting a little complicated when im ordering tweens, a lot of duplicate space, not necessarilly data but yeah, since they have to be ordered in such a way, yknow if i just name them all with a key property id know to look at the previous frame as a key, just keep in mind idea for two per key, remember its not a drawing app its an animation app so having that info is crucial and should be apparent, doing tricks to save space off the bat like this will only probably hurt you mmmk?
     // a better name would have numof bezes in frame or something
+    //TODO:::ADDRESS IMMEDIATELY THE BEZIERS START AT INDEX 1 YET THE FRAME IT TELL YOU IS 0 WTF JON OK I FIXED IT SO FRAMES ARE ARE 0 BUT I SUSPECT I BROKE SOMETHING GOOD LUCK FUTURE ME!,I DONT THINK THE BEZIER CUTTING WORKS ANYMORE
     unsigned int frames[3000];
 	__int32 BaseHeapAddress;
 	unsigned int numOfLines;
@@ -391,6 +392,7 @@ struct Application_State
     
     // TODO::vertex buffer will be the permanent one, very little is temporary in the drawing of the thing, its gonna take some rewriting to get that right though
     // DONT KNOW WHY THIS IS DONT CARE KILL ONE OF THESE
+    // its an interesting trick but its 50 200 max boxes not per frame, though that honestly sounds a hell of a lot better, I could definitely get my performance out from that.. well i can use this in conjunction with edgeboxes to do some damage, but changing it sounds gresat
     bezRef shapeBoxHandler[50][200];
 	bezierCurve bezierCurves[MAXFRMS][MAXBEZ];
     float vertexBuffer[6000000];

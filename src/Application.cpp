@@ -818,6 +818,28 @@ bool boxCollisions(bezRef c1, bezRef *c2, unsigned int numOfBoxes)
     return false;
 }
 
+bool fillShapeBoxCollisions(bezRef c1, Application_State *AppState)
+{
+    // c2 becomes the shapeBoxes[]
+    for (int j = 0; j < AppState->numOfEdgeBoxes; j++)
+    {
+        bezRef *c2 = AppState->shapeBoxHandler[j];
+        int numOfBoxes = AppState->EdgeBoxes[j].size;
+        for (int i = 0; i < numOfBoxes; i++)
+        {
+            if (c1.xl < c2[i].xh &&
+                c2[i].xl < c1.xh &&
+                c1.yl < c2[i].yh &&
+                c2[i].yl < c1.yh)
+            {
+                
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 // i dunno what im gonna do with new color but its there
 
 // cool i know how to make this i just havent, because i dont know if its necessaryz, im just
@@ -853,7 +875,7 @@ int NumOfShapeBoxesonCurFrame(Application_State *Astate)
     return count;
 }
 
-
+// make sure you put it in currFrame  - 1, again make sure to fix that so i dont have to or do have to 
 int NumOfShapeBoxesOnFrame(Application_State *Astate, int cfm)
 {
     int count = 0;
@@ -1166,14 +1188,12 @@ void adjustBox(unsigned int dir, bezRef *box, bezRef *c2, unsigned int *numOfBox
 
 void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBoxes, Application_State *AppState)
 {
-    
+    AppState->boxsize = 5.0f;
     if (!AppState->canFill)
     {
         return;
     }
-    // this is the bounds if i fill outside the bounds i should kill stop filling, it just gets complicated because filling, is a process that goes through stuff so to get it working right is gonna take some finagaling, that i really not too super stoked on doing
     
-    // i also dont know where im gonna get the bounds am I just gonna keep the max's and mins? or do I just calculate them here... hmm probably
     static boxRef bounds = {0, 1024, 0, 1024};
     // oh its simple just turn on a canFill variable or something and have that turn
     if (AppState->canFill &&
@@ -1206,7 +1226,7 @@ void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBox
                 for (unsigned int i = 0; i < *shpeBoxes; i++)
                 {
                     
-                    v4 weirdColor = {0.5f, i / 4.0f, i / 4.0f, 1.0f};
+                    v4 weirdColor = {0.5f , i / 4.0f, i / 4.0f, 1.0f};
                     
                     float boxsize = boxes[i].xh - boxes[i].xl;
                     float yboxsize = boxes[i].yh - boxes[i].yl;
@@ -1228,11 +1248,11 @@ void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBox
     //TODO:: its likely to not move a pixel when create a bezier point so it would be wise not to use this for its creation, instead use a fixed amount, that way i can also regulate the size of the triangles to some extent, its fine for beginning testing get the point accross type shit though
     glbDim.yh = 600.0f;
     int frm = AppState->currFrame;
-    if (!boxCollisions(box, AppState->shapeBoxHandler[frm], *shpeBoxes) && y - bwdth / 2 > glbDim.yl && x - bwdth / 2 > glbDim.xl && x + bwdth / 2 < glbDim.xh && y + bwdth / 2 < glbDim.yh)
+    if (!fillShapeBoxCollisions(box, AppState))
     {
         
         count++;
-        if (count > 1600)
+        if (count > 20)
         {
             AppState->paintCrap[0] = x;
             AppState->paintCrap[1] = y;
@@ -1262,7 +1282,7 @@ void floodFill(float x, float y, v4 oldcolor, v4 newcolor, unsigned int *shpeBox
     {
         // check if flush combine the two but anyway for now its fine
         static int newerBetterMostDefinitelyTemporaryCounter = 0;
-        if (boxCollisions(box,*AppState->shapeBoxHandler, tempShapeBoxesOutline) && y - bwdth / 2 > glbDim.yl && x - bwdth / 2 > glbDim.xl && x + bwdth / 2 < glbDim.xh && y + bwdth / 2 < glbDim.yh && newerBetterMostDefinitelyTemporaryCounter < 100)
+        if (fillShapeBoxCollisions(box,AppState))
         {
             newerBetterMostDefinitelyTemporaryCounter++;
             
@@ -1486,7 +1506,7 @@ bool shapeChecker(bezierCurve *bez, int b_t, traversedIX *tvd)
     
     
 #if 0
-    newsplitBezier(&AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame -1] -1], splits[1], boneHead2);
+    newsplitBezier(&AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame] -1], splits[1], boneHead2);
 #endif
     
     // I think on the thing before Im o
@@ -1808,9 +1828,9 @@ bool ValueCheck(Application_State *AppState)
                 
                 static bool clicked = false;
                 
-                if(clicked){
-                    v4 clor;
-                    AppState->numOfBoxHndler =  NumOfShapeBoxesonCurFrame(AppState);
+                if(!clicked){
+                    v4 clor = {1.0f,1.0f,1.0f,0.5f};
+                    //AppState->numOfBoxHndler =  NumOfShapeBoxesonCurFrame(AppState);
                     floodFill(AppState->mousePos.x, AppState->mousePos.y, v4{}, clor, &AppState->numOfBoxHndler, AppState);
                     clicked = true;
                 }
@@ -1828,7 +1848,7 @@ bool ValueCheck(Application_State *AppState)
                 float ckTest = NAN;
                 //ixblock[ixblockcnt - 1];
                 // i should rename frame to something like beziersInFrame or something I can take it into that program that can do that 
-                for(int bi = 0; bi < AppState->frames[AppState->currFrame -1] - 1; bi++){
+                for(int bi = 0; bi < AppState->frames[AppState->currFrame] - 1; bi++){
                     
                     intersection *iblock = AppState->bezierCurves[AppState->currFrame][bi].ix;
                     for(int i; i < AppState->bezierCurves[AppState->currFrame][bi].ixCount; i+=2)
@@ -1900,7 +1920,7 @@ bool ValueCheck(Application_State *AppState)
                 
 #if 0
                 bezRef *boneHead = AppState->shapeBoxHandler2;
-                for(int bi = 0; bi < AppState->frames[AppState->currFrame -1]; bi++){
+                for(int bi = 0; bi < AppState->frames[AppState->currFrame]; bi++){
                     
                     bezRef rando[8] = {};
                     //TODO::REPLACE SPLIT BEZIER its waste hmm this is wrong, well it doesnt matter its a pointless algorithm 
@@ -1920,7 +1940,7 @@ bool ValueCheck(Application_State *AppState)
             else if (AppState->mode == Selection && AppState->PenPressure > 0)
             {
                 int cfm = AppState->currFrame;
-                for(unsigned int i = 0; i < AppState->frames[AppState->currFrame -1]; i++)
+                for(unsigned int i = 0; i < AppState->frames[AppState->currFrame]; i++)
                 {
                     if(AppState->bezierCurves[cfm][i].yl  < AppState->mousePos.y && AppState->bezierCurves[cfm][i].yh >
                        AppState->mousePos.y && AppState->bezierCurves[cfm][i].xl  < AppState->mousePos.x && AppState->bezierCurves[cfm][i].xh >
@@ -2030,7 +2050,7 @@ bool ValueCheck(Application_State *AppState)
                 int cfm = AppState->currFrame;
                 v2 *rwpts = AppState->rawPoints;
                 // I think this should be fine for now, but in the future or later i want this in workingFrames
-                unsigned int *nOb = &AppState->frames[AppState->currFrame -1];
+                unsigned int *nOb = &AppState->frames[AppState->currFrame];
                 //this seems like the initializatio
                 if (*tPts == 2 && isNewPoint)
                 {
@@ -2128,7 +2148,7 @@ bool ValueCheck(Application_State *AppState)
                 //TODO:: WORK ON TODAY I changed my mind about the fill right there, Im gonna switch it up and see if i cant do a scanline and have it here.. hmm
                 
                 
-                if (AppState->frames[AppState->currFrame -1] > 1)
+                if (AppState->frames[AppState->currFrame] > 1)
                 {
                     // go figure it actually goes in here 
                     
@@ -2164,13 +2184,13 @@ bool ValueCheck(Application_State *AppState)
                     
                     splits[1] = &AppState->EdgeBoxes[AppState->numOfEdgeBoxes].size;
                     
-                    AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame -1] -1].edges = &AppState->EdgeBoxes[AppState->numOfEdgeBoxes];
+                    AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame] -1].edges = &AppState->EdgeBoxes[AppState->numOfEdgeBoxes];
                     
-                    AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame -1] -1].edges->edges = AppState->shapeBoxHandler[AppState->numOfEdgeBoxes];
+                    AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame] -1].edges->edges = AppState->shapeBoxHandler[AppState->numOfEdgeBoxes];
                     
-                    AppState->EdgeBoxes[AppState->numOfEdgeBoxes].curve = &AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame -1] -1];
+                    AppState->EdgeBoxes[AppState->numOfEdgeBoxes].curve = &AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame] -1];
                     
-                    AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame -1] -1].edges = &AppState->EdgeBoxes[AppState->numOfEdgeBoxes];
+                    AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame] -1].edges = &AppState->EdgeBoxes[AppState->numOfEdgeBoxes];
                     
                     AppState->numOfEdgeBoxes +=1;
                     // it should always be two all this thing should be doing is ordering what goes where 
@@ -2188,7 +2208,7 @@ bool ValueCheck(Application_State *AppState)
                     
                     // umm before we wanna check which ones even intersect to begin with and we'd do that here
                     
-                    for(int bi = 0; bi < AppState->frames[AppState->currFrame -1] - 1; bi++){
+                    for(int bi = 0; bi < AppState->frames[AppState->currFrame] - 1; bi++){
                         
                         //TODO::REPLACE SPLIT BEZIER its waste hmm this is wrong, well it doesnt matter its a pointless algorithm 
                         // well wasted two days should have read this.. note to self, learn to read
@@ -2202,7 +2222,7 @@ bool ValueCheck(Application_State *AppState)
                             
                             AppState->bezierCurves[cfm][bi].edges->edges = AppState->shapeBoxHandler[AppState->numOfEdgeBoxes];
                             
-                            AppState->bezierCurves[cfm][bi].edges->curve = &AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame -1] -1];
+                            AppState->bezierCurves[cfm][bi].edges->curve = &AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame] -1];
                             
                             
                             newsplitBezier(&AppState->bezierCurves[cfm][bi], splits[0], boneHead);
@@ -2214,7 +2234,7 @@ bool ValueCheck(Application_State *AppState)
                             boneHead = AppState->bezierCurves[cfm][bi].edges->edges;
                         }
                         if(*splits[1] == 0){
-                            newsplitBezier(&AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame -1] -1], splits[1], boneHead2);
+                            newsplitBezier(&AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame] -1], splits[1], boneHead2);
                         }
                         int nPts = AppState->bezierCurves[cfm][bi].numOfBPts;
                         //TODO:: point aggregation, if there are subsequent points all less than a pixel apart count them as a single pixel
@@ -2416,14 +2436,14 @@ bool ValueCheck(Application_State *AppState)
                                     int cfm = AppState->currFrame;
                                     
                                     b2->t2 = boneHead2[i2].t2;
-                                    unsigned int end = AppState->frames[AppState->currFrame -1] -1;
+                                    unsigned int end = AppState->frames[AppState->currFrame] -1;
                                     
                                     b1->bCurve = &AppState->bezierCurves[cfm][end];
                                     b2->bCurve = &AppState->bezierCurves[cfm][end];
                                     
                                     *splits[1] +=2;
                                     
-                                    unsigned int *iCnt = &AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame -1] -1].ixCount;
+                                    unsigned int *iCnt = &AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame] -1].ixCount;
                                     intersection ix  = {}; 
                                     intersection swapIx; 
                                     
@@ -2483,7 +2503,7 @@ bool ValueCheck(Application_State *AppState)
                                     boneHead2[i2] = {};
                                     boneHead[i] = {};
                                     // hopefully this wasnt supposed to do anything
-                                    &AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame -1] -1].ix[*iCnt];
+                                    &AppState->bezierCurves[cfm][AppState->frames[AppState->currFrame] -1].ix[*iCnt];
                                     *iCnt+=1;
                                     
                                     crs++;
@@ -2498,7 +2518,7 @@ bool ValueCheck(Application_State *AppState)
                         
                         //TODO::TOO SIMPLE SORT IT ALSO SORTS ALL OF THEM
 #if 0
-                        int end_i = AppState->frames[AppState->currFrame -1];
+                        int end_i = AppState->frames[AppState->currFrame];
                         for(int i = 0; i < end_i; i++){
                             bezierCurve *bc = &AppState->bezierCurves[i];
                             intersection swap;
@@ -2637,7 +2657,7 @@ bool ValueCheck(Application_State *AppState)
                     // this would be in a for lop 
                     v2 flts[2];
                     
-                    unsigned int end = AppState->frames[AppState->currFrame -1] -1;
+                    unsigned int end = AppState->frames[AppState->currFrame] -1;
                     AppState->bezierCurves[end];
                     
                     // it would be the two on the array that it gets in sequence, itd be this pair from the bez this pair from this bez etc etc
@@ -2764,7 +2784,7 @@ bool ValueCheck(Application_State *AppState)
                 // TODO:: this is where we made the test code for the filling, I have to add multiple intersections and multiple splits aswell see how that works with more than just one bezier going through, however you feel like testing it man
                 static bool testplayed = false;
                 int cfm = AppState->currFrame;
-                if (AppState->frames[AppState->currFrame -1] == 1 && !testplayed)
+                if (AppState->frames[AppState->currFrame] == 1 && !testplayed)
                 { 
                     // remember to check to see if the thing is clamped
                     testplayed = true;
@@ -2798,7 +2818,7 @@ bool ValueCheck(Application_State *AppState)
             
             // so your gonna replace number of beziers with this
             //AppState->frames[0] = AppState->numOfBeziers;
-            int nOb = AppState->frames[AppState->currFrame -1];
+            int nOb = AppState->frames[AppState->currFrame];
             int cfm = AppState->currFrame;
             for (f; f < nOb; f++)
             {
@@ -2926,7 +2946,7 @@ bool ValueCheck(Application_State *AppState)
                     }
                     
                     // it would be how many tu's we have times, how many curves*beziers
-                    v4 color = {1.0f, 0.0f, 1.0f, 0.0f};
+                    v4 color = {1.0f, 0.0f, 1.0f, 1.0f};
                     // putting it inside a array to do this again is dumb 
                     // dont do it 
                     float size = 0;
@@ -3049,12 +3069,6 @@ void Application_Update(Application_State *AppState)
         // done know how long num of lines will work but uh yeah for now f yeah
         // hashtag applogic .. teehee, Im hip
     }
-    
-    // this is like a listener sees what the user is doing does all the internal logic and gets things set up to see if
-    // it s to update the graphics, it updates variables, all that sort of good stuff
-    // Update
-    
-    // Rendering
     
     //inbetweeen here we can send all the data about the updating and rendering, like s update, and update speed
     
